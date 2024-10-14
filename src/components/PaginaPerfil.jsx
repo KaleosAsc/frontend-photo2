@@ -4,35 +4,38 @@ import './styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faUser, faUpload, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 function PaginaPerfil() {
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
+
+  const handleLogout = () => {
+    navigate('/Pagina'); // Redirige al index "Pagina" 
+  };
 
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-2 sidebar py-3">
-          <a href="/PaginaPrincipal">
+          <a onClick={() => navigate('/PaginaPrincipal')} className="d-block">
             <img
               src="/logo/LOGO(DAPA).png"
               alt="Logo DAPA"
               className="img-fluid mb-4 mx-auto d-block"
             />
           </a>
-          <a href="#" className="btn btn-light btn-lg btn-block mb-3">
-            <FontAwesomeIcon icon={faMagnifyingGlass} /> Buscar
-          </a>
-          <a href="/PaginaPerfil" className="btn btn-light btn-lg btn-block mb-3">
+          <a className="btn btn-light btn-lg btn-block mb-3" onClick={() => navigate('/PaginaPerfil')}>
             <FontAwesomeIcon icon={faUser} /> Perfil
           </a>
-          <a href="#" className="btn btn-light btn-lg btn-block">
+          <a className="btn btn-light btn-lg btn-block">
             <FontAwesomeIcon icon={faUpload} /> Crear
           </a>
           <br />
-          <a href="/index" className="btn btn-light btn-lg btn-block">
+          <a onClick={handleLogout} className="btn btn-light btn-lg btn-block">
             <FontAwesomeIcon icon={faRightFromBracket} /> Salir
           </a>
         </div>
