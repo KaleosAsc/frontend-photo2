@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css';
+import '../../styles/global.css';
 
 const Carrusel = ({ images = [], interval = 10 }) => {
     const [offset, setOffset] = useState(0);
