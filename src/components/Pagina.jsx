@@ -1,13 +1,14 @@
-// src/Index.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Cambiar a useNavigate
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CarruselWrapper from './CarruselWrapper';
 import './styles.css';
 
 const Pagina = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
-    const navigate = useNavigate(); // Inicializar useNavigate
+    const navigate = useNavigate();
+
     const handleLoginModal = () => {
         setShowLoginModal(!showLoginModal);
     };
@@ -16,60 +17,51 @@ const Pagina = () => {
         setShowRegisterModal(!showRegisterModal);
     };
 
-    // Función para manejar el inicio de sesión
     const handleLogin = () => {
-        // Aquí podrías agregar la lógica para verificar el inicio de sesión
-        // Si es exitoso, redirigir a PaginaPrincipal
-        navigate('/PaginaPrincipal'); // Redirige a PaginaPrincipal
-        handleLoginModal(); // Cerrar el modal de login
+        navigate('/PaginaPrincipal');
+        handleLoginModal();
     };
 
+    const handleRegister = () => {
+        navigate('/PaginaPrincipal');
+        handleRegisterModal();
+    };
+    const images = [
+        'https://img.freepik.com/foto-gratis/retrato-abstracto-ojo-elegancia-mujeres-jovenes-generado-ai_188544-9712.jpg', // Reemplaza con la ruta de tu imagen
+        'https://www.educaciontrespuntocero.com/wp-content/uploads/2020/04/mejores-bancos-de-imagenes-gratis.jpg',
+        'https://next-images.123rf.com/index/_next/image/?url=https://assets-cdn.123rf.com/index/static/assets/top-section-bg.jpeg&w=3840&q=75',
+        // Agrega más imágenes según sea necesario
+    ];
     return (
         <div className="container-fluid">
-            <div className="row">
-                <div className="col-md-2 sidebar">
-                    <img src="logo/LOGO(DAPA).png" alt="Logo DAPA" />
-                    <button className="btn btn-light" onClick={handleLoginModal}>Iniciar Sesión</button>
-                    <button className="btn btn-light" onClick={handleRegisterModal}>Registrar</button>
+            {/* Barra de navegación superior */}
+            <div className="row align-items-center bg-dark py-2">
+                <div className="col-2">
+                    
+                    <img src="logo/LOGO_DAPA_.svg" alt="Logo DAPA" style={{ height: '80px', marginLeft: '30px'}} />
                 </div>
-
-                <div className="col-md-10 main-content">
-                    <div className="header-buttons">
-                        <button className="btn btn-dark" onClick={handleLoginModal}>Iniciar sesión</button>
-                        <button className="btn btn-dark" onClick={handleRegisterModal}>Registrar</button>
+                <div className="col-6">
+                    <div className="search-container">
+                        <input type="text" className="form-control" placeholder="Search..." />
+                        <button className="btn btn-light search-button">
+                            <i className="fas fa-search"></i>
+                        </button>
                     </div>
-
-                    <h1>DAPA — De artistas, para artistas</h1>
-
-                    <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel" data-interval="2000">
-                        <ol className="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>
-                        <div className="carousel-inner">
-                            <div className="carousel-item active">
-                                <img src="imagenes/imagen2.jpeg" className="d-block w-50 mx-auto" alt="Imagen 1" />
-                            </div>
-                            <div className="carousel-item">
-                                <img src="imagenes/imagen4.jpeg" className="d-block w-50 mx-auto" alt="Imagen 2" />
-                            </div>
-                            <div className="carousel-item">
-                                <img src="imagenes/imagen6.jpg" className="d-block w-50 mx-auto" alt="Imagen 3" />
-                            </div>
-                        </div>
-                        <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span className="sr-only">Previous</span>
-                        </a>
-                        <a className="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span className="sr-only">Next</span>
-                        </a>
-                    </div>
+                </div>
+                <div className="col-2 text-right">
+                    <button className="btn btn-outline-light mx-5" onClick={handleLoginModal}>Sing in</button>
+                    <button className="btn btn-outline-light" onClick={handleRegisterModal}>Sing up</button>
+                </div>
+                <div className="col-2 text-right">
+                    <img src="imagenes/imagen2.jpeg" alt="Profile Icon" style={{ height: '40px', borderRadius: '50%' }} />
                 </div>
             </div>
 
+            {/* Contenido principal */}
+             {/* Carrusel de imágenes */}
+             <CarruselWrapper images={images} interval={10} />
+
+                 
             {/* Modal de inicio de sesión */}
             {showLoginModal && (
                 <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
@@ -94,8 +86,8 @@ const Pagina = () => {
                                     <button type="submit" className="btn btn-secondary btn-block">Login</button>
                                 </form>
                                 <div className="text-center mt-3">
-                                    <p>No tienes cuenta? <a href="#" onClick={handleRegisterModal}>Regístrate aquí</a>.</p>
-                                    <p><a href="#" onClick={handleRegisterModal}>Regístrate Gratis</a></p>
+                                    <p>No tienes cuenta? <a href="" onClick={handleRegisterModal}>Regístrate aquí</a>.</p>
+                                    <p><a href="" onClick={handleRegisterModal}>Regístrate Gratis</a></p>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +107,7 @@ const Pagina = () => {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <form id="registerForm">
+                                <form id="registerForm" onSubmit={(e) => { e.preventDefault(); handleRegister(); }}>
                                     <div className="form-group">
                                         <label htmlFor="firstName">Nombre</label>
                                         <input type="text" className="form-control" id="firstName" required />
