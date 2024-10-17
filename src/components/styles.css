@@ -82,7 +82,7 @@ body {
 }
   
 .gallery-item {
-    background-color: rgb(225, 218, 218); /* Fondo blanco para cada contenedor de imagen */
+    background-color: #eeeaea; /* Fondo blanco para cada contenedor de imagen */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
     text-align: center; /* Centrar el contenido de cada elemento */
     padding: 10px; /* Espaciado interno */
@@ -115,4 +115,21 @@ body {
     max-height: 100px; /* Ajusta según sea necesario */
     overflow: auto;
     margin: 0; /* Elimina el margen para que se vea limpio */
+}
+
+/* carrusel */
+.carousel-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.carousel-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
+    border-top: 1px solid #ccc; /* Línea en la parte superior del carrusel */
+    padding: 10px 0; /* Espaciado superior e inferior */
+}
+
+.carousel-images img {
+    object-fit: cover;
 }

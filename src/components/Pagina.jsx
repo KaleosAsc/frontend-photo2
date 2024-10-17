@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CarruselWrapper from './CarruselWrapper';
 import './styles.css';
-import Carrusel from './Carrusel';
 
 const Pagina = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -27,12 +27,11 @@ const Pagina = () => {
         handleRegisterModal();
     };
     const images = [
-        'https://media.istockphoto.com/id/636379014/es/foto/manos-la-formaci%C3%B3n-de-una-forma-de-coraz%C3%B3n-con-silueta-al-atardecer.jpg?s=612x612&w=0&k=20&c=R2BE-RgICBnTUjmxB8K9U0wTkNoCKZRi-Jjge8o_OgE=',
+        'https://img.freepik.com/foto-gratis/retrato-abstracto-ojo-elegancia-mujeres-jovenes-generado-ai_188544-9712.jpg', // Reemplaza con la ruta de tu imagen
         'https://www.educaciontrespuntocero.com/wp-content/uploads/2020/04/mejores-bancos-de-imagenes-gratis.jpg',
         'https://next-images.123rf.com/index/_next/image/?url=https://assets-cdn.123rf.com/index/static/assets/top-section-bg.jpeg&w=3840&q=75',
-        'https://media.es.wired.com/photos/6501e7429fa9000811a95fe8/16:9/w_2560%2Cc_limit/Adobe%2520Firefly.jpeg'
+        // Agrega más imágenes según sea necesario
     ];
-
     return (
         <div className="container-fluid">
             {/* Barra de navegación superior */}
@@ -59,22 +58,9 @@ const Pagina = () => {
             </div>
 
             {/* Contenido principal */}
-            <div className="row">
-                <div className="col-12 main-content">
-                    <h1 style={{ color: 'black' }}>DAPA — De artistas, para artistas</h1> 
-                    {/* Carrusel de imágenes */}
-                    <div className="row mt-4">
-                        <div className="col-md-6">
-                            <h3 className="text-center">Carrusel hacia la derecha</h3>
-                            <Carrusel images={images} direction="right" />
-                        </div>
-                        <div className="col-md-6">
-                            <h3 className="text-center">Carrusel hacia la izquierda</h3>
-                            <Carrusel images={images} direction="left" />
-                        </div>
-                    </div>
-                </div>
-            </div>
+             {/* Carrusel de imágenes */}
+             <CarruselWrapper images={images} interval={10} />
+
                  
             {/* Modal de inicio de sesión */}
             {showLoginModal && (
