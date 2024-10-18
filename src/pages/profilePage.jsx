@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles.css';
+import '../styles/global.css';
 import { Modal, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import Galeria from './Galeria'; // Asegúrate de tener el import correcto para Galeria
+import Galeria from '../components/gallery/Gallery'; // Asegúrate de tener el import correcto para Galeria
 
 function PaginaPerfil() {
   const [showEditModal, setShowEditModal] = useState(false);
