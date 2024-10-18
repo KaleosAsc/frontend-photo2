@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CarruselWrapper from './CarruselWrapper';
-import './styles.css';
+import CarruselWrapper from '../components/Carrusel/CarruselWrapper';
+import '../styles/global.css';
 
 const Pagina = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);

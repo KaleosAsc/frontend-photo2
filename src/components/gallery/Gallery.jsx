@@ -1,6 +1,6 @@
 // Galeria.js
 import React from 'react';
-import './styles.css'; // Asegúrate de tener tus estilos adecuados
+import '../../styles/global.css'// Asegúrate de tener tus estilos adecuados
 
 const Galeria = ({ photos }) => {
   return (
