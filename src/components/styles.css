@@ -34,7 +34,6 @@ body {
     color: #bbb; /* Color del placeholder */
 }
 
-
 /* parte de los botones */
 .btn-link {
     position: relative;
@@ -43,7 +42,8 @@ body {
     transition: color 0.3s ease;
 }
 
-.btn-link:hover, .btn-link:focus {
+.btn-link:hover,
+.btn-link:focus {
     color: #007bff; /* Cambia el color de texto a azul al pasar el mouse o al enfocarse */
 }
 
@@ -58,29 +58,28 @@ body {
     transition: width 0.3s ease;
 }
 
-.btn-link:hover::after, .btn-link:focus::after {
+.btn-link:hover::after,
+.btn-link:focus::after {
     width: 100%; /* Anima la línea para que se expanda completamente al pasar el mouse o enfocar */
 }
 
-
-/* parte de las fotos en la principal*/
+/* parte de las fotos en la principal */
 .photo-gallery {
     margin: 20px 0;
 }
 
 .card {
-    border: none; 
+    border: none;
 }
 
-
-/* componente galeria*/
+/* componente galería */
 .gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 3 columnas ajustables */
     gap: 30px; /* Aumentar el espacio entre elementos */
     margin-top: 30px; /* Espacio superior para la galería */
 }
-  
+
 .gallery-item {
     background-color: #eeeaea; /* Fondo blanco para cada contenedor de imagen */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
@@ -89,29 +88,28 @@ body {
     max-height: 600px; /* Aumentar la altura máxima del contenedor */
     overflow: hidden; /* Evitar que el contenido sobrepase el contenedor */
 }
-  
+
 .gallery-image {
     max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
     max-height: 400px; /* Aumenta la altura máxima de la imagen */
     height: auto; /* Mantener la relación de aspecto de la imagen */
     border-radius: 4px; /* Bordes redondeados para las imágenes */
 }
-  
+
 .description-container {
     max-height: 200px; /* Limitar la altura para dar más espacio a la descripción */
     overflow-y: auto; /* Permitir el desplazamiento vertical si el contenido excede la altura */
     padding: 0 20px; /* Espaciado lateral */
 }
-  
+
 .description {
     margin: 0; /* Elimina el margen para un ajuste más limpio */
     overflow-wrap: break-word; /* Permite que las palabras largas se rompan */
     word-wrap: break-word; /* Compatibilidad con navegadores más antiguos */
 }
 
-
-  /* contenedor del texto */
-  .card-text {
+/* contenedor del texto */
+.card-text {
     max-height: 100px; /* Ajusta según sea necesario */
     overflow: auto;
     margin: 0; /* Elimina el margen para que se vea limpio */
@@ -133,3 +131,33 @@ body {
 .carousel-images img {
     object-fit: cover;
 }
+
+/* Consultas de medios para adaptabilidad */
+@media (max-width: 768px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 2 columnas en pantallas más pequeñas */
+    }
+
+    .search-container input {
+        padding: 8px; /* Ajusta el padding para pantallas pequeñas */
+    }
+
+    .carousel-container {
+        padding: 5px 0; /* Ajusta el padding para pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery {
+        grid-template-columns: 1fr; /* 1 columna en pantallas muy pequeñas */
+    }
+
+    .search-container input {
+        padding: 5px; /* Ajusta el padding aún más para pantallas pequeñas */
+    }
+
+    .carousel-container {
+        padding: 2px 0; /* Ajusta el padding para pantallas muy pequeñas */
+    }
+}
+
