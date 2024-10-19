@@ -9,6 +9,9 @@ body {
     position: relative;
     display: flex;
     align-items: center;
+    max-width: 600px; /* Limitar el ancho máximo para evitar desbordes */
+    margin: 0 auto; /* Centrar el contenedor de búsqueda */
+    padding: 10px;
 }
 
 .search-container input {
@@ -23,7 +26,7 @@ body {
 
 .search-container .search-button {
     position: absolute;
-    right: 0;
+    right: 10px; /* Añadir espacio desde el borde */
     border: none;
     background: transparent;
     cursor: pointer;
@@ -66,70 +69,77 @@ body {
 /* parte de las fotos en la principal */
 .photo-gallery {
     margin: 20px 0;
+    padding: 0 10px; /* Añadir padding lateral para mantener el contenido dentro de la vista */
 }
 
 .card {
     border: none;
+    overflow: hidden; /* Evitar desbordes */
 }
 
 /* componente galería */
 .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 3 columnas ajustables */
-    gap: 30px; /* Aumentar el espacio entre elementos */
-    margin-top: 30px; /* Espacio superior para la galería */
+    gap: 20px; /* Aumentar el espacio entre elementos */
+    margin: 20px; /* Espaciado para que no toque los bordes de la pantalla */
 }
 
 .gallery-item {
     background-color: #eeeaea; /* Fondo blanco para cada contenedor de imagen */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
     text-align: center; /* Centrar el contenido de cada elemento */
-    padding: 10px; /* Espaciado interno */
-    max-height: 600px; /* Aumentar la altura máxima del contenedor */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Redondear bordes */
     overflow: hidden; /* Evitar que el contenido sobrepase el contenedor */
 }
 
 .gallery-image {
-    max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
-    max-height: 400px; /* Aumenta la altura máxima de la imagen */
-    height: auto; /* Mantener la relación de aspecto de la imagen */
+    width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+    max-height: 100px; /* Altura máxima de la imagen */
+    object-fit: cover; /* Ajuste de la imagen dentro del contenedor */
     border-radius: 4px; /* Bordes redondeados para las imágenes */
 }
 
 .description-container {
-    max-height: 200px; /* Limitar la altura para dar más espacio a la descripción */
+    max-height: 150px; /* Limitar la altura */
     overflow-y: auto; /* Permitir el desplazamiento vertical si el contenido excede la altura */
-    padding: 0 20px; /* Espaciado lateral */
+    padding: 0 10px; /* Espaciado lateral */
 }
 
 .description {
     margin: 0; /* Elimina el margen para un ajuste más limpio */
     overflow-wrap: break-word; /* Permite que las palabras largas se rompan */
-    word-wrap: break-word; /* Compatibilidad con navegadores más antiguos */
 }
 
 /* contenedor del texto */
 .card-text {
-    max-height: 100px; /* Ajusta según sea necesario */
+    max-height: 100px;
     overflow: auto;
-    margin: 0; /* Elimina el margen para que se vea limpio */
+    margin: 0;
 }
 
 /* carrusel */
 .carousel-wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: center; /* Centrar verticalmente */
     height: 100vh;
+    overflow: hidden; /* Evitar que el contenido desborde */
 }
 
 .carousel-container {
     background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
     border-top: 1px solid #ccc; /* Línea en la parte superior del carrusel */
-    padding: 10px 0; /* Espaciado superior e inferior */
+    padding: 10px;
 }
 
 .carousel-images img {
-    object-fit: cover;
+    width: 100%;
+    height: auto;
+    max-height: 400px; /* Ajustar la altura máxima para evitar desbordes */
+    object-fit: cover; /* Ajustar imagen al contenedor */
+    border-radius: 4px; /* Bordes redondeados */
 }
 
 /* Consultas de medios para adaptabilidad */
@@ -139,11 +149,15 @@ body {
     }
 
     .search-container input {
-        padding: 8px; /* Ajusta el padding para pantallas pequeñas */
+        padding: 8px;
     }
 
     .carousel-container {
-        padding: 5px 0; /* Ajusta el padding para pantallas pequeñas */
+        padding: 5px;
+    }
+
+    .search-container .search-button {
+        right: 5px; /* Ajustar posición para pantallas pequeñas */
     }
 }
 
@@ -152,12 +166,15 @@ body {
         grid-template-columns: 1fr; /* 1 columna en pantallas muy pequeñas */
     }
 
+    .search-container {
+        padding: 5px;
+    }
+
     .search-container input {
-        padding: 5px; /* Ajusta el padding aún más para pantallas pequeñas */
+        padding: 5px;
     }
 
     .carousel-container {
-        padding: 2px 0; /* Ajusta el padding para pantallas muy pequeñas */
+        padding: 2px;
     }
 }
-
