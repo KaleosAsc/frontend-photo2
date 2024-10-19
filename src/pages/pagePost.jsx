@@ -13,75 +13,58 @@ function PaginaPublicaciones() {
   // Funciones para abrir y cerrar el modal
   const handleShowUpdateModal = () => setShowUpdateModal(true);
   const handleCloseUpdateModal = () => setShowUpdateModal(false);
-
   const navigate = useNavigate();
 
   return (
     <div className="container-fluid">
       {/* Contenedor principal */}
       <div className="row">
-        {/*  Barra de navegación superior */}
+        {/* Barra de navegación superior */}
         <div className="row align-items-center bg-dark py-2">
-          <div className="col-2">
+          <div className="col-12 col-sm-2 text-center text-sm-start mb-2 mb-sm-0">
             <a href="/PaginaPrincipal">
-              <img src="logo/LOGO_DAPA_.svg" alt="Logo DAPA" style={{ height: '80px', marginLeft: '30px' }} />
+              <img src="logo/LOGO_DAPA_.svg" alt="Logo DAPA" className="img-fluid" style={{ height: '80px' }} />
             </a>
           </div>
-          <div className="col-6">
-            <div className="search-container">
-              <input type="text" className="form-control" placeholder="Search..." />
+          <div className="col-12 col-sm-6 mb-2 mb-sm-0">
+            <div className="search-container d-flex justify-content-center justify-content-sm-start">
+              <input type="text" className="form-control me-2" placeholder="Search..." />
               <button className="btn btn-light search-button">
                 <i className="fas fa-search"></i>
               </button>
             </div>
           </div>
-          <div className="col-4 d-flex justify-content-end">
-            <div className="btn-group" style={{ marginRight: '30px' }}>
-              <button
-                className="btn btn-link text-light me-4"
-                onClick={() => navigate('/paginaPerfil')}
-                style={{ textDecoration: 'none', fontSize: '16px' }}
-              >
+          <div className="col-12 col-sm-4 d-flex justify-content-center justify-content-sm-end align-items-center">
+            <div className="btn-group mb-2 mb-sm-0">
+              <button className="btn btn-link text-light me-2" onClick={() => navigate('/paginaPerfil')} style={{ textDecoration: 'none', fontSize: '16px' }}>
                 Perfil
               </button>
-              <button
-                className="btn btn-link text-light me-4"
-                onClick={() => navigate('/PaginaPublicaciones')}
-                style={{ textDecoration: 'none', fontSize: '16px' }}
-              >
+              <button className="btn btn-link text-light me-2" onClick={() => navigate('/PaginaPublicaciones')} style={{ textDecoration: 'none', fontSize: '16px' }}>
                 Tabla Publicaciones
               </button>
-              <button
-                className="btn btn-link text-light me-4"
-                onClick={() => navigate('/TablaUsuarios')}
-                style={{ textDecoration: 'none', fontSize: '16px' }}
-              >
+              <button className="btn btn-link text-light me-2" onClick={() => navigate('/TablaUsuarios')} style={{ textDecoration: 'none', fontSize: '16px' }}>
                 Tabla Usuarios
               </button>
-              <button
-                className="btn btn-link text-light me-4"
-                onClick={() => navigate('/Pagina')}
-                style={{ textDecoration: 'none', fontSize: '16px' }}
-              >
+              <button className="btn btn-link text-light me-2" onClick={() => navigate('/Pagina')} style={{ textDecoration: 'none', fontSize: '16px' }}>
                 Exit
               </button>
             </div>
-            <img src="imagenes/imagen2.jpeg" alt="Profile Icon" style={{ height: '50px', borderRadius: '50%' }} />
+            <img src="imagenes/imagen2.jpeg" alt="Profile Icon" className="rounded-circle" style={{ height: '50px', width: '50px' }} />
           </div>
         </div>
 
         {/* Sección de contenido principal */}
-        <div className="col-md-10 d-flex flex-column align-items-center">
-          <h1 className="my-3">DAPA — De artistas, para artistas</h1>
-          <div className="table-responsive w-100" style={{ marginLeft: '20%' }}>
+        <div className="col-12 d-flex flex-column align-items-center">
+          <h1 className="my-3 text-center">DAPA — De artistas, para artistas</h1>
+          <div className="table-responsive w-100">
             <Table bordered className="text-center">
               <thead>
                 <tr>
-                  <th scope="col" style={{ width: '15%' }}>UserName</th>
-                  <th scope="col" style={{ width: '25%' }}>Description</th>
-                  <th scope="col" style={{ width: '25%' }}>Image</th>
-                  <th scope="col" style={{ width: '15%' }}>Stars</th>
-                  <th scope="col" style={{ width: '15%' }}>Action</th>
+                  <th scope="col">UserName</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Stars</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
