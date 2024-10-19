@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CarruselWrapper from '../components/Carrusel/CarruselWrapper';
+import RegisterForm from '../components/forms/RegisterForms'; 
 import '../styles/global.css';
 
 const Pagina = () => {
@@ -94,51 +95,12 @@ const Pagina = () => {
                     </div>
                 </div>
             )}
-
-            {/* Modal de registro */}
-            {showRegisterModal && (
-                <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Regístrate gratis En DAPA</h5>
-                                <button type="button" className="close" onClick={handleRegisterModal}>
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <form id="registerForm" onSubmit={(e) => { e.preventDefault(); handleRegister(); }}>
-                                    <div className="form-group">
-                                        <label htmlFor="firstName">Nombre</label>
-                                        <input type="text" className="form-control" id="firstName" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="lastName">Apellido</label>
-                                        <input type="text" className="form-control" id="lastName" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="birthday">Fecha Cumpleaños</label>
-                                        <input type="date" className="form-control" id="birthday" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="username">Usuario</label>
-                                        <input type="text" className="form-control" id="username" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="email">Correo Electronico</label>
-                                        <input type="email" className="form-control" id="email" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="password">Contraseña</label>
-                                        <input type="password" className="form-control" id="password" required />
-                                    </div>
-                                    <button type="submit" className="btn btn-secondary btn-block">Regístrate</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {
+                showRegisterModal &&(
+                    <RegisterForm/>
+                )
+            }
+        
         </div>
     );
 };
