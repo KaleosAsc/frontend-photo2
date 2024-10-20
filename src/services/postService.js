@@ -3,6 +3,12 @@ import axios from 'axios';
 // Definir la URL de las APIs usando variables de entorno
 const API_URL_POST = process.env.REACT_APP_API_URL_POST;
 
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 class PostService {
     // Método para obtener todos los posts
     async getPosts() {
@@ -18,13 +24,12 @@ class PostService {
     // Método para crear un nuevo post
     async createPost(data) {
         try {
-            const token = localStorage.getItem('access_token');
+            const token = getCookie('access_token'); // Cambia aquí para obtenerlo de las cookies
             console.log('Token de autenticación:', token);
             const response = await axios.post(`${API_URL_POST}`, data, {
                 headers: {
-                    'Content-Type': 'multipart/form-data', // Para manejar archivos como imágenes
-                    'Authorization': `Bearer ${token}`,    //Incluye token en los encabezados
-                    
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
                 },
                 withCredentials: true,
             });
