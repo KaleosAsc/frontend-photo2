@@ -1,44 +1,67 @@
 import axios from 'axios';
-const API_URL = "http://127.0.0.1:8000/api/user/";
-const API_URL_TOKEN_ACCESS = "http://127.0.0.1:8000/api/token/";
-const API_URL_TOKEN_REFRESH = "http://127.0.0.1:8000/api/user/";
 
-export const getUsers = async () => {
-   try {
-       const response = await axios.get(`${API_URL}`);
-       return response.data; // Devuelve los datos obtenidos
-   } catch (error) {
-       console.error('Error fetching data:', error);
-       throw error; // Propaga el error
-   }
-};
+// Definir la URL de las APIs usando variables de entorno
+const API_URL = process.env.REACT_APP_API_URL_USER;
+const API_URL_TOKEN_ACCESS = process.env.REACT_APP_API_URL_TOKEN_ACCESS;
+const API_URL_TOKEN_REFRESH = process.env.REACT_APP_API_URL_TOKEN_REFRESH;
+const API_URL_REGISTER = process.env.REACT_APP_API_URL_REGISTER;
 
-export const postUsers = async (data) => {
-   try {
-       const response = await axios.get(`${API_URL}`,data);
-       return response.data; // Devuelve los datos obtenidos
-   } catch (error) {
-       console.error('Error fetching data:', error);
-       throw error; // Propaga el error
-   }
-};
+class UserService {
+    // Método para registrar usuarios
+    async registerUsers(data) {
+        try {
+            const response = await axios.post(`${API_URL_REGISTER}`, data);
+            return response.data; // Devuelve los datos obtenidos
+        } catch (error) {
+            console.error('Error registrando usuario:', error);
+            throw error; // Propaga el error
+        }
+    }
 
-export const putUsers = async (id,data) => {
-   try {
-       const response = await axios.put(`${API_URL}/${id}`,data);
-       return response.data; // Devuelve los datos obtenidos
-   } catch (error) {
-       console.error('Error fetching data:', error);
-       throw error; // Propaga el error
-   }
-};
+    // Método para iniciar sesión
+    async loginUsers(data) {
+        try {
+            const response = await axios.post(`${API_URL_TOKEN_ACCESS}`, data);
+            return response.data; // Devuelve los datos obtenidos
+        } catch (error) {
+            console.error('Error iniciando sesión:', error);
+            throw error; // Propaga el error
+        }
+    }
 
-export const deleteUsers = async (id) => {
-   try {
-       const response = await axios.delete(`${API_URL}/${id}`);
-       return response.data; // Devuelve los datos obtenidos
-   } catch (error) {
-       console.error('Error fetching data:', error);
-       throw error; // Propaga el error
-   }
-};
+    // Método para obtener usuarios
+    async getUsers() {
+        try {
+            const response = await axios.get(`${API_URL}`);
+            return response.data; // Devuelve los datos obtenidos
+        } catch (error) {
+            console.error('Error obteniendo usuarios:', error);
+            throw error; // Propaga el error
+        }
+    }
+
+    // Método para actualizar un usuario
+    async putUsers(id, data) {
+        try {
+            const response = await axios.put(`${API_URL}/${id}`, data);
+            return response.data; // Devuelve los datos obtenidos
+        } catch (error) {
+            console.error('Error actualizando usuario:', error);
+            throw error; // Propaga el error
+        }
+    }
+
+    // Método para eliminar un usuario
+    async deleteUsers(id) {
+        try {
+            const response = await axios.delete(`${API_URL}/${id}`);
+            return response.data; // Devuelve los datos obtenidos
+        } catch (error) {
+            console.error('Error eliminando usuario:', error);
+            throw error; // Propaga el error
+        }
+    }
+}
+
+// Exporta la clase para usarla en otros archivos
+export default new UserService();

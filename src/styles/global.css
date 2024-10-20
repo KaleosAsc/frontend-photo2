@@ -120,8 +120,8 @@ body {
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-  gap: 30px; /* Aumentar el espacio entre elementos */
-  margin-top: 30px; /* Espacio superior para la galería */
+  gap: 10px; /* Espacio entre elementos */
+  margin-top: 20px; /* Espacio superior para la galería */
 }
 
 .gallery-item {
@@ -129,54 +129,39 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
   text-align: center; /* Centrar el contenido de cada elemento */
   padding: 10px; /* Espaciado interno */
-  max-height: 600px; /* Aumentar la altura máxima del contenedor */
+  border-radius: 8px;   
   overflow: hidden; /* Evitar que el contenido sobrepase el contenedor */
 }
 
 .gallery-image {
-  max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
-  max-height: 400px; /* Aumenta la altura máxima de la imagen */
-  height: auto; /* Mantener la relación de aspecto de la imagen */
+  width: 100%; /* Asegura que la imagen se adapte al ancho del contenedor */
+  height: 80%; /* Ajustar la altura para dejar espacio para la descripción */
+  object-fit: cover; /* Cubre todo el contenedor manteniendo la relación de aspecto */
+  object-position: center; /* Centra la imagen dentro del contenedor */
   border-radius: 4px; /* Bordes redondeados para las imágenes */
 }
 
 .description-container {
-  max-height: 200px; /* Limitar la altura para dar más espacio a la descripción */
+  max-height: 100px; /* Limitar la altura para dar más espacio a la descripción */
   overflow-y: auto; /* Permitir el desplazamiento vertical si el contenido excede la altura */
-  padding: 0 20px; /* Espaciado lateral */
+  padding: 10px; /* Espaciado lateral */
 }
 
 .description {
   margin: 0; /* Elimina el margen para un ajuste más limpio */
   overflow-wrap: break-word; /* Permite que las palabras largas se rompan */
   word-wrap: break-word; /* Compatibilidad con navegadores más antiguos */
+  font-size: 14px; /* Tamaño de fuente ajustado para mejor legibilidad */
+  color: #333; /* Color de texto para mejor contraste */
 }
 
 
-/* contenedor del texto */
-.card-text {
-  max-height: 100px; /* Ajusta según sea necesario */
-  overflow: auto;
-  margin: 0; /* Elimina el margen para que se vea limpio */
-}
 
-/* carrusel */
-.carousel-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+/* Estilo para la imagen destacada */
+.gallery-item.featured {
+  grid-column: span 3; /* Ocupa 3 columnas */
+  grid-row: span 3; /* Ocupa 3 filas */
 }
-
-.carousel-container {
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
-  border-top: 1px solid #ccc; /* Línea en la parte superior del carrusel */
-  padding: 10px 0; /* Espaciado superior e inferior */
-}
-
-.carousel-images img {
-  object-fit: cover;
-}
-
 
 @keyframes App-logo-spin {
   from {
@@ -184,5 +169,18 @@ body {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* modal registro y iniciar sesion */	
+@media (max-width: 576px) {
+  .modal-dialog {
+      max-width: 90%; /* Ajusta el ancho del modal para pantallas pequeñas */
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+      max-width: 60%; /* Ajusta el ancho del modal para pantallas medianas */
   }
 }
