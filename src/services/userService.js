@@ -10,7 +10,12 @@ class UserService {
     // Método para registrar usuarios
     async registerUsers(data) {
         try {
-            const response = await axios.post(`${API_URL_REGISTER}`, data);
+            const response = await axios.post(`${API_URL_REGISTER}`, data,{
+                headers: {
+                    'Content-Type': 'application/json', // Asegúrate de que el tipo de contenido sea JSON
+                },
+                withCredentials: true,
+            });
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error registrando usuario:', error);

@@ -1,74 +1,74 @@
 import React, { useReducer } from 'react';
-import User from  '../../services/userService';
+import User from '../../services/userService';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
 
 // Estado inicial
 const initialState = {
-   firstName: '',
-   lastName: '',
-   birthday: '',
-   username: '',
-   email: '',
-   password: '',
+    firstName: '',
+    lastName: '',
+    birthday: '',
+    username: '',
+    email: '',
+    password: '',
 };
+
 const reducer = (state, action) => {
-   switch (action.type) {
-       case 'SET_FIELD':
-           return { ...state, [action.field]: action.value };
-       case 'RESET':
-           return initialState;
-       default:
-           return state;
-   }
+   //Chnager of state if present data
+    switch (action.type) {
+        case 'SET_FIELD':
+            return { ...state, [action.field]: action.value };
+        case 'RESET':
+            return initialState;
+        default:
+            return state;
+    }
 };
 
-const RegisterModal = ({ show, onClose, onRegister }) => {
-   User.registerUsers();
-   const [state, dispatch] = useReducer(reducer, initialState);
-   const handleChange = (e) => {
-      dispatch({
-          type: 'SET_FIELD',
-          field: e.target.id,
-          value: e.target.value,
-      });
-  };
+const RegisterModal = ({ show, onClose }) => {
+   //useReducer for change in modalRegister ()
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const navigate = useNavigate(); // Inicializa useNavigate
 
-  const handleSubmit =  async (e) => {
-      e.preventDefault();
-      const data = {
-         username: "johndoe",        // Nombre de usuario
-         first_name: "John",         // Primer nombre
-         last_name: "Doe",           // Apellido
-         birthday: "1990-01-01",     // Fecha de nacimiento (formato YYYY-MM-DD)
-         email: "johndoe@example.com", // Correo electrónico
-         password: "securePassword123", // Contraseña
-         description: "hola"         // Descripción o cualquier valor que desees
-     };
-     const jsonData = JSON.stringify(data);
-     
-         // Construir el objeto de datos a enviar
-      //    const data = {
-      //       username: state.username,
-      //       first_name: state.firstName,
-      //       last_name: state.lastName,
-      //       birthday: state.birthday,
-      //       email: state.email,
-      //       password: state.password,
-      //       description: "hola" // O cualquier valor que desees
-      //   };
-        console.log(data);
-        try{
-         const response =  await User.registerUsers(jsonData);
-         console.log('Usuario registrado', response);
-         dispatch({ type: 'RESET' }); // Resetea el formulario después de registrarse
-        }catch(error){
-         console.error('Error al registrar usuario', error);
+    const handleChange = (e) => {
+        dispatch({
+            type: 'SET_FIELD',
+            field: e.target.id,
+            value: e.target.value,
+        });
+    };
+
+    //mehtod for when somehting update from model
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Construir el objeto de datos a enviar 
+        const data = {
+            username: state.username,
+            first_name: state.firstName,
+            last_name: state.lastName,
+            birthday: state.birthday,
+            email: state.email,
+            password: state.password,
+            description: "hola" // O cualquier valor que desees
+        };
+
+        //past to JSON
+        const jsonData = JSON.stringify(data);
+        console.log('Datos a enviar:', jsonData);
+
+        try {
+            //Send to userServiuce
+            const response = await User.registerUsers(jsonData);
+            //Print response(we have to comment this /the user can watch de password)
+            console.log('Usuario registrado', response);
+            dispatch({ type: 'RESET' }); // Resetea el formulario después de registrarse
+            navigate('/PaginaPrincipal'); //Send to principalPage
+        } catch (error) {
+            console.error('Error al registrar usuario', error); //In case of error
         }
+    };
 
-
-  };
     return (
         <>
             {show && (
@@ -82,30 +82,72 @@ const RegisterModal = ({ show, onClose, onRegister }) => {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <form id="registerForm" onSubmit={(e) => { e.preventDefault(); onRegister(); }}>
+                                <form id="registerForm" onSubmit={handleSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="firstName">Nombre</label>
-                                        <input type="text" className="form-control" id="firstName" required />
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="firstName"
+                                            value={state.firstName}
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="lastName">Apellido</label>
-                                        <input type="text" className="form-control" id="lastName" required />
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="lastName"
+                                            value={state.lastName}
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="birthday">Fecha de Cumpleaños</label>
-                                        <input type="date" className="form-control" id="birthday" required />
+                                        <input
+                                            type="date"
+                                            className="form-control"
+                                            id="birthday"
+                                            value={state.birthday}
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="username">Usuario</label>
-                                        <input type="text" className="form-control" id="username" required />
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="username"
+                                            value={state.username}
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="email">Correo Electrónico</label>
-                                        <input type="email" className="form-control" id="email" required />
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            id="email"
+                                            value={state.email}
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="password">Contraseña</label>
-                                        <input type="password" className="form-control" id="password" required />
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            id="password"
+                                            value={state.password}
+                                            onChange={handleChange}
+                                            required
+                                        />
                                     </div>
                                     <button type="submit" className="btn btn-secondary btn-block">Regístrate</button>
                                 </form>
