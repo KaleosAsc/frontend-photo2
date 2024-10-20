@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/global.css';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { FaStar } from 'react-icons/fa';
+import AddPhotoModal from '../components/Modals/AddPhotoModal'; // Asegúrate de tener la ruta correcta
+import PhotoGallery from '../components/gallery/PhotoGallery'; // Importa el nuevo componente
 
 const PaginaPrincipal = () => {
   const navigate = useNavigate();
@@ -77,51 +77,7 @@ const PaginaPrincipal = () => {
         <div className="col-md-10 main-content">
           <h1 className="text-center my-4">DAPA — De artistas, para artistas</h1>
           {/* Mostrar las fotos públicas */}
-          <div
-            className="photo-gallery d-flex flex-column align-items-center"
-            style={{
-              width: '90%',
-              maxWidth: '800px',
-              margin: '50px auto',
-              marginLeft: '30%',
-            }}
-          >
-            {photos.map((photo, index) => (
-              <div key={index} className="mb-4 w-100" style={{ maxWidth: '500px' }}>
-                <div className="card">
-                  <img
-                    src={photo.url}
-                    className="card-img-top"
-                    alt={`Foto ${index + 1}`}
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      backgroundColor: '#f0f0f0',
-                    }}
-                  />
-                  <div className="card-body d-flex flex-column flex-md-row justify-content-between align-items-center">
-                    <div className="mb-2 mb-md-0" style={{ flex: 1, maxHeight: '100px', overflow: 'auto' }}>
-                      <p className="card-text">{photo.description}</p>
-                    </div>
-                    <div className="d-flex align-items-center">
-                      <div className="star-rating me-2">
-                        {[...Array(5)].map((star, i) => (
-                          <FaStar
-                            key={i}
-                            color={i < photo.rating ? 'gold' : 'gray'}
-                            size={20}
-                            onClick={() => !photo.rated && handleRating(index, i + 1)}
-                            style={{ cursor: photo.rated ? 'not-allowed' : 'pointer' }}
-                          />
-                        ))}
-                      </div>
-                      <span>Valoración: {photo.rating}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <PhotoGallery photos={photos} handleRating={handleRating} />
         </div>
         {/* Botón para abrir el modal */}
         <div className="col-12 d-flex justify-content-center my-4">
@@ -142,37 +98,14 @@ const PaginaPrincipal = () => {
         </div>
       </div>
       {/* Modal para agregar foto y descripción */}
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Agregar Foto y Descripción</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Seleccionar Foto</Form.Label>
-              <Form.Control type="file" onChange={handlePhotoChange} />
-            </Form.Group>
-            <Form.Group controlId="formDescription">
-              <Form.Label>Descripción</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Escribe una descripción..."
-                value={description}
-                onChange={handleDescriptionChange}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Subir
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <AddPhotoModal
+        show={showModal}
+        handleClose={handleModalClose}
+        handlePhotoChange={handlePhotoChange}
+        handleDescriptionChange={handleDescriptionChange}
+        description={description}
+        handleSubmit={handleSubmit}
+      />
     </div>
   );
 };

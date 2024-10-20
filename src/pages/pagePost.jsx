@@ -1,3 +1,4 @@
+// PaginaPublicaciones.js
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/global.css';
@@ -5,15 +6,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faUser, faUpload, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Button, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import UpdateModal from '../components/Modals/UpdatePublicationModal';
+import PublicationsTable from '../components/tables/PublicationsTable';
 
 function PaginaPublicaciones() {
-  // Estados para manejar la visibilidad del modal
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-
-  // Funciones para abrir y cerrar el modal
-  const handleShowUpdateModal = () => setShowUpdateModal(true);
-  const handleCloseUpdateModal = () => setShowUpdateModal(false);
+  const [selectedPublication, setSelectedPublication] = useState(null);
   const navigate = useNavigate();
+
+  const handleShowUpdateModal = (publication) => {
+    setSelectedPublication(publication);
+    setShowUpdateModal(true);
+  };
+
+  const handleCloseUpdateModal = () => setShowUpdateModal(false);
+  const handleSaveChanges = () => {
+    // Aquí iría la lógica para guardar los cambios
+    console.log('Guardar cambios para la publicación:', selectedPublication);
+    setShowUpdateModal(false);
+  };
+
+  const handleDelete = (publication) => {
+    // Aquí iría la lógica para eliminar la publicación
+    console.log('Eliminar publicación:', publication);
+  };
+
+  const publicationsData = [
+    {
+      userName: 'Usuario1',
+      description: 'Descripción de la publicación',
+      image: 'path/to/image1.jpg',
+      stars: 4,
+    },
+    {
+      userName: 'Usuario2',
+      description: 'Otra descripción',
+      image: 'path/to/image2.jpg',
+      stars: 5,
+    },
+  ];
 
   return (
     <div className="container-fluid">
@@ -56,64 +87,20 @@ function PaginaPublicaciones() {
         {/* Sección de contenido principal */}
         <div className="col-12 d-flex flex-column align-items-center">
           <h1 className="my-3 text-center">DAPA — De artistas, para artistas</h1>
-          <div className="table-responsive w-100">
-            <Table bordered className="text-center">
-              <thead>
-                <tr>
-                  <th scope="col">UserName</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Image</th>
-                  <th scope="col">Stars</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <Button variant="dark" size="sm" onClick={handleShowUpdateModal}>
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                    </Button>
-                    <Button variant="dark" size="sm">
-                      <FontAwesomeIcon icon={faTrash} />
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-          </div>
+          <PublicationsTable
+            data={publicationsData}
+            onEdit={handleShowUpdateModal}
+            onDelete={handleDelete}
+          />
         </div>
       </div>
 
       {/* Modal de actualización */}
-      <Modal show={showUpdateModal} onHide={handleCloseUpdateModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Actualizar Datos</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form id="updateForm">
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <input type="text" className="form-control" id="description" name="description" required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="image">Imagen</label>
-              <input type="file" className="form-control" id="image" name="image" accept="image/*" required />
-            </div>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="dark" onClick={handleCloseUpdateModal}>
-            Cerrar
-          </Button>
-          <Button variant="dark">
-            Guardar cambios
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <UpdateModal
+        show={showUpdateModal}
+        handleClose={handleCloseUpdateModal}
+        handleSave={handleSaveChanges}
+      />
     </div>
   );
 }
