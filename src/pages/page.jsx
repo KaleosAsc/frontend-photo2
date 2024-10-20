@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CarruselWrapper from '../components/Carrusel/CarruselWrapper';
 import '../styles/global.css';
+import LoginModal from '../components/Modals/LoginModal'; // Importa el LoginModal
+import RegisterModal from '../components/Modals/RegisterModal'; // Importa el RegisterModal
 
 const Pagina = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -62,78 +64,9 @@ const Pagina = () => {
                 <CarruselWrapper images={images} interval={10} />
             </div>
 
-            {/* Modal de inicio de sesión */}
-            {showLoginModal && (
-                <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
-                    <div className="modal-dialog modal-dialog-centered modal-lg col-8 mx-auto" style={{maxWidth: '400px', marginTop: '-15vh' }} role="document">
-                        <div className="modal-content col-8 mx-auto">
-                            <div className="modal-header">
-                                <h5 className="modal-title col-8 mx-auto">Login into DAPA</h5>
-                                <button type="button" className="close" onClick={handleLoginModal}>
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <form id="loginForm" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
-                                    <div className="form-group col-8 mx-auto">
-                                        <label htmlFor="username">Username</label>
-                                        <input type="text" className="form-control" id="username" required />
-                                    </div>
-                                    <div className="form-group col-8 mx-auto">
-                                        <label htmlFor="password">Password</label>
-                                        <input type="password" className="form-control" id="password" required />
-                                    </div>
-                                    <button type="submit" className="btn btn-secondary btn-block ">Login</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {/* Modal de Registro */}
-            {showRegisterModal && (
-                <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
-                    <div className="modal-dialog modal-dialog-centered modal-lg" style={{maxWidth: '400px', marginTop: '-10vh' }} role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Regístrate gratis en DAPA</h5>
-                                <button type="button" className="close" onClick={handleRegisterModal}>
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div className="modal-body">
-                                <form id="registerForm" onSubmit={(e) => { e.preventDefault(); handleRegister(); }}>
-                                    <div className="form-group">
-                                        <label htmlFor="firstName">Nombre</label>
-                                        <input type="text" className="form-control" id="firstName" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="lastName">Apellido</label>
-                                        <input type="text" className="form-control" id="lastName" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="birthday">Fecha de Cumpleaños</label>
-                                        <input type="date" className="form-control" id="birthday" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="username">Usuario</label>
-                                        <input type="text" className="form-control" id="username" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="email">Correo Electrónico</label>
-                                        <input type="email" className="form-control" id="email" required />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="password">Contraseña</label>
-                                        <input type="password" className="form-control" id="password" required />
-                                    </div>
-                                    <button type="submit" className="btn btn-secondary btn-block">Regístrate</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {/* Modales */}
+            <LoginModal show={showLoginModal} onClose={handleLoginModal} onLogin={handleLogin} />
+            <RegisterModal show={showRegisterModal} onClose={handleRegisterModal} onRegister={handleRegister} />
         </div>
     );
 };
