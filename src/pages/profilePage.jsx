@@ -4,6 +4,8 @@ import '../styles/global.css';
 import { Modal, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Galeria from '../components/gallery/Gallery'; // Asegúrate de tener el import correcto para Galeria
+import EditProfileModal from '../components/Modals/EditProfileModal';
+import PublishModal from '../components/Modals/PublishModal';
 
 function PaginaPerfil() {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -108,55 +110,13 @@ function PaginaPerfil() {
         </div>
       </div>
       {/* Modal de edición de perfil */}
-      <Modal show={showEditModal} onHide={handleCloseEdit}>
-        <Modal.Header closeButton>
-          <Modal.Title>Editar Perfil</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form>
-            <div className="form-group">
-              <label htmlFor="perfil">Nombre Perfil</label>
-              <input type="text" className="form-control" id="perfil" defaultValue="Nombre del perfil" />
-              <label htmlFor="completo">Nombre Usuario</label>
-              <input type="text" className="form-control" id="completo" defaultValue="Nombre del usuario" />
-            </div>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="dark" onClick={handleCloseEdit}>
-            Cerrar
-          </Button>
-          <Button variant="dark">
-            Guardar Cambios
-          </Button>
-        </Modal.Footer>
-      </Modal>
+       <EditProfileModal show={showEditModal} handleClose={handleCloseEdit} />
       {/* Modal para publicar imagen y descripción */}
-      <Modal show={showPublishModal} onHide={handleClosePublish}>
-        <Modal.Header closeButton>
-          <Modal.Title>Publicar Contenido</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handlePublish}>
-            <div className="form-group">
-              <label htmlFor="image">Agregar foto</label>
-              <input type="file" className="form-control" id="image" name="image" accept="image/*" required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="description">Descripción</label>
-              <textarea className="form-control" id="description" name="description" rows="3"></textarea>
-            </div>
-            <Button type="submit" variant="dark" className="mt-2">
-              Publicar
-            </Button>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="dark" onClick={handleClosePublish}>
-            Cerrar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <PublishModal
+        show={showPublishModal}
+        handleClose={handleClosePublish}
+        handlePublish={handlePublish}
+      />
     </div>
   );
 }
