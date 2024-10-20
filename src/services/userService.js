@@ -26,7 +26,12 @@ class UserService {
     // Método para iniciar sesión
     async loginUsers(data) {
         try {
-            const response = await axios.post(`${API_URL_TOKEN_ACCESS}`, data);
+            const response = await axios.post(`${API_URL_TOKEN_ACCESS}`, data, {
+                headers: {
+                    'Content-Type': 'application/json', // Asegúrate de que el tipo de contenido sea JSON
+                },
+                withCredentials: true,
+            });
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error iniciando sesión:', error);
