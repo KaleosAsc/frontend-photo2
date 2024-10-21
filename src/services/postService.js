@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from './apiService';
 
 // Definir la URL de las APIs usando variables de entorno
 const API_URL_POST = process.env.REACT_APP_API_URL_POST;
@@ -13,7 +13,7 @@ class PostService {
     // Método para obtener todos los posts
     async getPosts() {
         try {
-            const response = await axios.get(`${API_URL_POST}`);
+            const response = await axiosInstance.get(`${API_URL_POST}`);
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error obteniendo posts:', error);
@@ -24,12 +24,10 @@ class PostService {
     // Método para crear un nuevo post
     async createPost(data) {
         try {
-            const token = getCookie('access_token'); // Cambia aquí para obtenerlo de las cookies
-            console.log('Token de autenticación:', token);
-            const response = await axios.post(`${API_URL_POST}`, data, {
+            console.log('Cookies recibidas:', document.cookie);
+            const response = await axiosInstance.post(`${API_URL_POST}`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`, // Incluye el token en los encabezados
                 },
                 withCredentials: true,
             });
@@ -43,7 +41,7 @@ class PostService {
     // Método para actualizar un post existente
     async updatePost(id, data) {
         try {
-            const response = await axios.put(`${API_URL_POST}/${id}`, data, {
+            const response = await axiosInstance.put(`${API_URL_POST}/${id}`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data', // Para manejar archivos
                 },
@@ -59,7 +57,7 @@ class PostService {
     // Método para eliminar un post
     async deletePost(id) {
         try {
-            const response = await axios.delete(`${API_URL_POST}/${id}`);
+            const response = await axiosInstance.delete(`${API_URL_POST}/${id}`);
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error eliminando el post:', error);

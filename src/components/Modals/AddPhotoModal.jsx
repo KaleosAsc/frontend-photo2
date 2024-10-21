@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import Post from '../../services/postService'; // Asegúrate de tener el servicio de fotos
+import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 // Estado inicial para el modal de agregar foto
@@ -27,6 +28,7 @@ const reducer = (state, action) => {
 
 const AddPhotoModal = ({ show, handleClose }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const navigate = useNavigate();
 
   // Resetea los campos cada vez que el modal se abre
   useEffect(() => {
@@ -47,7 +49,7 @@ const AddPhotoModal = ({ show, handleClose }) => {
   const handleDescriptionChange = (e) => {
     dispatch({
       type: 'SET_FIELD',
-      field: 'description',
+      field: 'description_photo',
       value: e.target.value,
     });
   };
@@ -77,6 +79,7 @@ const AddPhotoModal = ({ show, handleClose }) => {
       handleClose();
       // Muestra alerta de éxito
       window.alert('Foto subida con éxito.');
+      
     } catch (error) {
       console.error('Error al subir la foto:', error);
       // Muestra alerta de error
