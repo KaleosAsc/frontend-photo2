@@ -1,73 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/global.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Table, Button } from 'react-bootstrap';
+import { faMagnifyingGlass, faUser, faUpload, faPlus, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Modal, Button, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import RegisterModal from '../Modals/RegisterModal'; // Importa el RegisterModal
-import UpdateUserModal from '../Modals/UpdateUserModal'; // Importa el UpdateUserModal
-import UserService from '../../services/userService'; // Asegúrate de importar el servicio
+import RegisterUserModal from '../Modals/RegisterUserModal';
+import UpdateUserModal from '../Modals/UpdateUserModal';
 
-const TablaUsuarios = () => {
+function TablaUsuarios() {
+  // Estados para manejar la visibilidad de los modales
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [users, setUsers] = useState([]); // Estado para almacenar usuarios
-  const [selectedUserId, setSelectedUserId] = useState(null); // Estado para almacenar el ID del usuario seleccionado
+
+  // Funciones para abrir y cerrar los modales
+  const handleShowRegisterModal = () => setShowRegisterModal(true);
+  const handleCloseRegisterModal = () => setShowRegisterModal(false);
+  const handleShowUpdateModal = () => setShowUpdateModal(true);
+  const handleCloseUpdateModal = () => setShowUpdateModal(false);
   const navigate = useNavigate();
-
-  const handleRegisterModal = () => {
-    setShowRegisterModal(!showRegisterModal);
-  };
-
-  const handleRegister = async () => {
-    await fetchUsers(); // Vuelve a cargar los usuarios después de registrar
-    navigate('/PaginaPrincipal');
-    handleRegisterModal(); 
-  };
-
-  const handleShowUpdateModal = (id) => {
-    setSelectedUserId(id); // Almacena el ID del usuario que se quiere actualizar
-    setShowUpdateModal(true);
-  };
-
-  const handleCloseUpdateModal = () => {
-    setShowUpdateModal(false);
-    setSelectedUserId(null); // Resetea el ID seleccionado
-  };
-
-  // Función para obtener usuarios al cargar el componente
-  const fetchUsers = async () => {
-    try {
-      const data = await UserService.getUsers();
-      setUsers(data); // Almacena los usuarios en el estado
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
-
-  // Llama a fetchUsers al montar el componente
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  // Función para eliminar un usuario
-  const handleDeleteUser = async (id) => {
-    if (window.confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-      try {
-        await UserService.deleteUsers(id);
-        fetchUsers(); // Actualiza la tabla después de eliminar
-      } catch (error) {
-        console.error('Error eliminando usuario:', error);
-      }
-    }
-  };
-
-  // Función para actualizar un usuario
-  const handleUpdateUser = async () => {
-    await fetchUsers(); // Vuelve a cargar la lista de usuarios después de actualizar
-    handleCloseUpdateModal(); // Cierra el modal de actualización
-  };
 
   return (
     <div className="container-fluid">
@@ -114,39 +65,38 @@ const TablaUsuarios = () => {
             <Table bordered className="text-center">
               <thead>
                 <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Apellido</th>
-                  <th scope="col">Cumpleaños</th>
-                  <th scope="col">Usuario</th>
-                  <th scope="col">Correo</th>
+                  <th scope="col">id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">LastName</th>
+                  <th scope="col">Birthday</th>
+                  <th scope="col">User</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Password</th>
                   <th scope="col">
-                    {/* Botón para abrir el modal de registro */}
-                    <Button variant="dark" size="sm" onClick={handleRegisterModal}>
+                    <Button variant="dark" size="sm" onClick={handleShowRegisterModal}>
                       <FontAwesomeIcon icon={faPlus} />
                     </Button>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user.user_id}>
-                    <td>{user.user_id}</td>
-                    <td>{user.first_name}</td>
-                    <td>{user.last_name}</td>
-                    <td>{user.birthday}</td>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>
-                      <Button variant="dark" size="sm" onClick={() => handleShowUpdateModal(user.user_id)}>
-                        <FontAwesomeIcon icon={faPenToSquare} />
-                      </Button>
-                      <Button variant="dark" size="sm" onClick={() => handleDeleteUser(user.user_id)}>
-                        <FontAwesomeIcon icon={faTrash} />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <Button variant="dark" size="sm" onClick={handleShowUpdateModal}>
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </Button>
+                    <Button variant="dark" size="sm">
+                      <FontAwesomeIcon icon={faTrash} />
+                    </Button>
+                  </td>
+                </tr>
               </tbody>
             </Table>
           </div>
@@ -154,9 +104,10 @@ const TablaUsuarios = () => {
       </div>
 
       {/* Modal para registrar usuario */}
-      <RegisterModal show={showRegisterModal} onClose={handleRegisterModal} onRegister={handleRegister} />
+      <RegisterUserModal show={showRegisterModal} handleClose={handleCloseRegisterModal} />
+
       {/* Modal para actualizar usuario */}
-      <UpdateUserModal show={showUpdateModal} handleClose={handleCloseUpdateModal} userId={selectedUserId} onUpdate={handleUpdateUser} />
+      <UpdateUserModal show={showUpdateModal} handleClose={handleCloseUpdateModal}/>
     </div>
   );
 }

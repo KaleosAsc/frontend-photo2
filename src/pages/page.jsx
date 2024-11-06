@@ -28,13 +28,6 @@ const Pagina = () => {
         navigate('/PaginaPrincipal');
         handleRegisterModal();
     };
-
-    const images = [
-        'https://img.freepik.com/foto-gratis/retrato-abstracto-ojo-elegancia-mujeres-jovenes-generado-ai_188544-9712.jpg',
-        'https://www.educaciontrespuntocero.com/wp-content/uploads/2020/04/mejores-bancos-de-imagenes-gratis.jpg',
-        'https://next-images.123rf.com/index/_next/image/?url=https://assets-cdn.123rf.com/index/static/assets/top-section-bg.jpeg&w=3840&q=75',
-    ];
-
     return (
         <div className="container-fluid">
             {/* Barra de navegación superior */}
@@ -61,7 +54,7 @@ const Pagina = () => {
 
             {/* Contenido principal */}
             <div className="my-4">
-                <CarruselWrapper images={images} interval={10} />
+                <CarruselWrapper/>
             </div>
 
             {/* Modales */}
