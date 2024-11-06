@@ -1,59 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css'; 
+import 'slick-carousel/slick/slick-theme.css';
 import '../../styles/global.css';
 
-const Carrusel = ({ images = [], interval = 10 }) => {
-    const [offset, setOffset] = useState(0);
-    const imageCount = images.length;
+const imageArray = [
+  {
+    src: 'https://www.sdpnoticias.com/resizer/v2/U2FPBYGYWRAC3EUZ5NN7IG7FCA.jpg?smart=true&auth=3ce93b76a3fe5c3dbc2435448f254745df5c32a4853564e8d06326aff0aa1347&width=640&height=360',
+  },
+  {
+    src: 'https://r-charts.com/es/miscelanea/procesamiento-imagenes-magick_files/figure-html/color-fondo-imagen-r.png',
+  },
+  {
+    src: 'https://img.freepik.com/fotos-premium/abstracto-bombilla-creativa-fondo-azul-brillante-ia-generativa_1259851-72.jpg',   
+  },
+  {
+    src: 'https://marketing4ecommerce.co/wp-content/uploads/2023/10/ias-generadoras-de-imagenes.jpg',
+  },
+  {
+    src: 'https://casamontessori.edu.co/wp-content/uploads/2018/05/fondos-pantalla-paisajes-hermosos-bonitos-naturales-escritorio-fotografias-hd-wallpaper-imagenes-fotos-3d-gato-gatitos-tierno-1-1.jpg',
+  },
+  {
+    src: 'https://img.freepik.com/foto-gratis/retrato-abstracto-ojo-elegancia-mujeres-jovenes-generado-ai_188544-9712.jpg',
+  }
 
-    useEffect(() => {
-        const moveSlide = () => {
-            setOffset(prevOffset => {
-                const newOffset = prevOffset - 0.1; // Mueve hacia la izquierda
+];
 
-                // Reinicia el offset cuando llega al final de las imágenes
-                if (newOffset <= -100 * imageCount) {
-                    return 0; // Reinicia para crear un bucle continuo
-                }
+const Carousel = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
 
-                return newOffset;
-            });
-        };
-
-        const timer = setInterval(moveSlide, interval);
-        return () => clearInterval(timer);
-    }, [imageCount, interval]);
-
-    return (
-        <div className="carousel-container" style={{ overflow: 'hidden', width: '100%', position: 'fixed', bottom: '0', left: '0', zIndex: 10 }}>
-            <div
-                className="carousel-images"
-                style={{
-                    display: 'flex',
-                    transform: `translateX(${offset}%)`,
-                    transition: 'transform 0.1s linear', // Movimiento suave y continuo
-                }}
-            >
-                {/* Duplicamos las imágenes para el efecto de bucle continuo */}
-                {[...images, ...images].map((image, index) => (
-                    <img
-                        key={index}
-                        src={image}
-                        alt={`Slide ${index}`}
-                        style={{ width: '100%', height: '300px', objectFit: 'cover' }} // Ajusta la altura según sea necesario
-                    />
-                ))}
-            </div>
-        </div>
-    );
+  return (
+    <div className="carousel-container">
+      <Slider {...settings}>
+        {imageArray.map((image, index) => (
+          <div className="carousel-item" key={index}>
+            <img src={image.src} alt={image.alt} />
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
 };
 
-const CarruselWrapper = ({ images, interval = 10 }) => {
-    return (
-        <div className="carousel-wrapper" style={{ width: '100%' }}>
-            {/* Carrusel que se mueve de derecha a izquierda y está fijo en la parte inferior */}
-            <Carrusel images={images} interval={interval} />
-        </div>
-    );
-};
-
-export default CarruselWrapper;
+export default Carousel;

@@ -1,5 +1,6 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import User from '../../services/userService';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Estado inicial
@@ -13,7 +14,7 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-    // Manejo de estado dependiendo de la acción
+   //Chnager of state if present data
     switch (action.type) {
         case 'SET_FIELD':
             return { ...state, [action.field]: action.value };
@@ -25,8 +26,9 @@ const reducer = (state, action) => {
 };
 
 const RegisterModal = ({ show, onClose }) => {
-    // useReducer para manejar el estado del formulario
+   //useReducer for change in modalRegister ()
     const [state, dispatch] = useReducer(reducer, initialState);
+    const navigate = useNavigate(); // Inicializa useNavigate
 
     const handleChange = (e) => {
         dispatch({
@@ -36,18 +38,11 @@ const RegisterModal = ({ show, onClose }) => {
         });
     };
 
-    // Se resetea el formulario cada vez que el modal se abre
-    useEffect(() => {
-        if (show) {
-            dispatch({ type: 'RESET' }); // Resetea el formulario cuando se abre el modal
-        }
-    }, [show]);
-
-    // Método para manejar el envío del formulario
+    //mehtod for when somehting update from model
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Construir el objeto de datos a enviar
+        // Construir el objeto de datos a enviar 
         const data = {
             username: state.username,
             first_name: state.firstName,
@@ -58,21 +53,19 @@ const RegisterModal = ({ show, onClose }) => {
             description: "hola" // O cualquier valor que desees
         };
 
+        //past to JSON
+        const jsonData = JSON.stringify(data);
+        console.log('Datos a enviar:', jsonData);
+
         try {
-            // Enviar los datos al servicio
-            const response = await User.registerUsers(JSON.stringify(data));
+            //Send to userServiuce
+            const response = await User.registerUsers(jsonData);
+            //Print response(we have to comment this /the user can watch de password)
             console.log('Usuario registrado', response);
-
-            // Resetea el formulario después del registro
-            dispatch({ type: 'RESET' });
-
-            // Cerrar el modal
-            onClose();
-
-            // Mostrar una alerta para iniciar sesión
-            window.alert('Registro exitoso. Por favor, inicia sesión para continuar.');
+            dispatch({ type: 'RESET' }); // Resetea el formulario después de registrarse
+            navigate('/PaginaPrincipal'); //Send to principalPage
         } catch (error) {
-            console.error('Error al registrar usuario', error); // Manejar errores
+            console.error('Error al registrar usuario', error); //In case of error
         }
     };
 
