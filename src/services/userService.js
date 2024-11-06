@@ -1,4 +1,5 @@
 import axiosInstance from './apiService';
+import interactionSerice from './interactionService';
 
 // Definir la URL de las APIs usando variables de entorno
 const API_URL = process.env.REACT_APP_API_URL_USER;
@@ -7,6 +8,9 @@ const API_URL_TOKEN_REFRESH = process.env.REACT_APP_API_URL_TOKEN_REFRESH;
 const API_URL_REGISTER = process.env.REACT_APP_API_URL_REGISTER;
 
 class UserService {
+    constructor(id_user){
+        this.id_user = id_user;
+    }
     // Método para registrar usuarios
     async registerUsers(data) {
         try {
@@ -16,6 +20,8 @@ class UserService {
                 },
                 withCredentials: true,
             });
+            this.id_user = reponse.data.id_user;
+            console.log(this.id_user);
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error registrando usuario:', error);
@@ -48,6 +54,12 @@ class UserService {
         } catch (error) {
             console.error('Error obteniendo usuarios:', error);
             throw error; // Propaga el error
+        }
+    }
+
+    async getOneUser(){
+        try{
+            
         }
     }
 

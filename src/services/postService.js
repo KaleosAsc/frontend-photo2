@@ -3,13 +3,16 @@ import axiosInstance from './apiService';
 // Definir la URL de las APIs usando variables de entorno
 const API_URL_POST = process.env.REACT_APP_API_URL_POST;
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-}
+// function getCookie(name) {
+//     const value = `; ${document.cookie}`;
+//     const parts = value.split(`; ${name}=`);
+//     if (parts.length === 2) return parts.pop().split(';').shift();
+// }
 
 class PostService {
+    constructor(id_user){
+        this.id_user = id_user;
+    }
     // Método para obtener todos los posts
     async getPosts() {
         try {
