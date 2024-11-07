@@ -78,6 +78,7 @@ body {
   color: #bbb; /* Color del placeholder */
 }
 
+
 /* parte de los botones */
 .btn-link {
   position: relative;
@@ -289,4 +290,43 @@ body {
     height: 120px; /* Ajusta la altura para pantallas muy pequeñas */
   }
 }
+
+/* Estilos del componente ImageGallery */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajusta el tamaño mínimo y máximo de las columnas */
+  gap: 15px; /* Espacio entre las imágenes */
+  padding: 20px; /* Espacio alrededor de la galería */
+  justify-items: center; /* Centra las imágenes dentro de su contenedor */
+}
+
+.image-item {
+  width: 100%;
+  overflow: hidden; /* Evita que las imágenes se salgan del contenedor */
+}
+
+.image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover; /* Asegura que las imágenes mantengan su proporción */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Media queries para asegurar la responsividad */
+@media (max-width: 768px) {
+  .image-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Ajusta el tamaño mínimo en pantallas medianas */
+  }
+}
+
+@media (max-width: 480px) {
+  .image-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta el tamaño mínimo en pantallas pequeñas */
+  }
+
+  .image {
+    height: 200px; /* Ajusta la altura de las imágenes en pantallas pequeñas */
+  }
+}
+
 
