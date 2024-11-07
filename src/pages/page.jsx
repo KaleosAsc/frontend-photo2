@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CarruselWrapper from '../components/Carrusel/CarruselWrapper';
 import '../styles/global.css';
-import LoginModal from '../components/Modals/LoginModal'; // Importa el LoginModal
-import RegisterModal from '../components/Modals/RegisterModal'; // Importa el RegisterModal
+import LoginModal from '../components/Modals/LoginModal';
+import RegisterModal from '../components/Modals/RegisterModal';
+import ImageGallery from '../components/gallery/ImageGallery';
 
 const Pagina = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -28,6 +29,7 @@ const Pagina = () => {
         navigate('/PaginaPrincipal');
         handleRegisterModal();
     };
+
     return (
         <div className="container-fluid">
             {/* Barra de navegación superior */}
@@ -54,7 +56,8 @@ const Pagina = () => {
 
             {/* Contenido principal */}
             <div className="my-4">
-                <CarruselWrapper/>
+                <CarruselWrapper />
+                <ImageGallery />
             </div>
 
             {/* Modales */}
