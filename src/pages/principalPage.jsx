@@ -42,40 +42,42 @@ const PaginaPrincipal = () => {
     <div className="container-fluid">
       <div className="row">
         {/* Barra de navegación superior */}
-        <div className="row align-items-center bg-dark py-2">
-          <div className="col-6 col-md-2 d-flex justify-content-center justify-content-md-start">
-            <img src="logo/LOGO_DAPA_.svg" alt="Logo DAPA" style={{ height: '80px', marginLeft: '30px' }} />
-          </div>
-          <div className="col-12 col-md-6 mt-2 mt-md-0">
-            <div className="search-container">
-              <input type="text" className="form-control" placeholder="Search..." />
+        <div className="col-12">
+          <div className="row align-items-center bg-dark py-2">
+            <div className="col-6 col-md-2 d-flex justify-content-center justify-content-md-start">
+              <img src="logo/LOGO_DAPA_.svg" alt="Logo DAPA" style={{ height: '80px', marginLeft: '30px' }} />
             </div>
-          </div>
-          <div className="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mt-2 mt-md-0">
-            <div className="btn-group">
-              <button className="btn btn-link text-light me-2" onClick={() => navigate('/paginaPerfil')} style={{ textDecoration: 'none', fontSize: '16px' }}>
-                Perfil
-              </button>
-              {userRole === "admin" && (
-                <>
-                  <button className="btn btn-link text-light me-2" onClick={() => navigate('/PaginaPublicaciones')} style={{ textDecoration: 'none', fontSize: '16px' }}>
-                    Publicaciones
-                  </button>
-                  <button className="btn btn-link text-light me-2" onClick={() => navigate('/TablaUsuarios')} style={{ textDecoration: 'none', fontSize: '16px' }}>
-                    Usuarios
-                  </button>
-                </>
-              )}
-              <button className="btn btn-link text-light me-2" onClick={() => navigate('/Pagina')} style={{ textDecoration: 'none', fontSize: '16px' }}>
-                Salir
-              </button>
+            <div className="col-12 col-md-6 mt-2 mt-md-0">
+              <div className="search-container">
+                <input type="text" className="form-control" placeholder="Search..." />
+              </div>
             </div>
-            <img src="imagenes/imagen2.jpeg" alt="Profile Icon" style={{ height: '50px', borderRadius: '50%' }} />
+            <div className="col-12 col-md-4 d-flex justify-content-center justify-content-md-end mt-2 mt-md-0">
+              <div className="btn-group">
+                <button className="btn btn-link text-light me-2" onClick={() => navigate('/paginaPerfil')} style={{ textDecoration: 'none', fontSize: '16px' }}>
+                  Perfil
+                </button>
+                {userRole === "admin" && (
+                  <>
+                    <button className="btn btn-link text-light me-2" onClick={() => navigate('/PaginaPublicaciones')} style={{ textDecoration: 'none', fontSize: '16px' }}>
+                      Publicaciones
+                    </button>
+                    <button className="btn btn-link text-light me-2" onClick={() => navigate('/TablaUsuarios')} style={{ textDecoration: 'none', fontSize: '16px' }}>
+                      Usuarios
+                    </button>
+                  </>
+                )}
+                <button className="btn btn-link text-light me-2" onClick={() => navigate('/Pagina')} style={{ textDecoration: 'none', fontSize: '16px' }}>
+                  Salir
+                </button>
+              </div>
+              <img src="imagenes/imagen2.jpeg" alt="Profile Icon" style={{ height: '50px', borderRadius: '50%' }} />
+            </div>
           </div>
         </div>
         {/* Contenido Principal */}
         <div className="col-md-10 main-content">
-          <h1 className="text-center my-4">DAPA — De artistas, para artistas</h1>
+          <h1 className="text-center my-5 title-shift">DAPA — De artistas, para artistas</h1>
           {/* Mostrar las fotos públicas */}
           <PhotoGallery photos={photos} handleRating={handleRating} />
         </div>
