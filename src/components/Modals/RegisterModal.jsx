@@ -5,12 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Estado inicial
 const initialState = {
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     birthday: '',
     username: '',
     email: '',
     password: '',
+    description: 'Esta es una foto divertida',
 };
 
 const reducer = (state, action) => {
@@ -45,12 +46,12 @@ const RegisterModal = ({ show, onClose }) => {
         // Construir el objeto de datos a enviar 
         const data = {
             username: state.username,
-            first_name: state.firstName,
-            last_name: state.lastName,
+            first_name: state.first_name,
+            last_name: state.last_name,
             birthday: state.birthday,
             email: state.email,
             password: state.password,
-            description: "hola" // O cualquier valor que desees
+            description: "Esta es una foto divertida" // O cualquier valor que desees
         };
 
         //past to JSON
@@ -88,8 +89,8 @@ const RegisterModal = ({ show, onClose }) => {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            id="firstName"
-                                            value={state.firstName}
+                                            id="first_name"
+                                            value={state.first_name}
                                             onChange={handleChange}
                                             required
                                         />
@@ -99,8 +100,8 @@ const RegisterModal = ({ show, onClose }) => {
                                         <input
                                             type="text"
                                             className="form-control"
-                                            id="lastName"
-                                            value={state.lastName}
+                                            id="last_name"
+                                            value={state.last_name}
                                             onChange={handleChange}
                                             required
                                         />

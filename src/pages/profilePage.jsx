@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Post from '../services/postService';
+import User from '../services/userService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/global.css';
 import { Modal, Button } from 'react-bootstrap';
@@ -10,14 +12,16 @@ import PublishModal from '../components/Modals/PublishModal';
 function PaginaPerfil() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showPublishModal, setShowPublishModal] = useState(false);
-  const [photos, setPhotos] = useState([]); // Estado para almacenar las fotos
+  const [photos, setPhotos] = useState([]); // Estado para almacenar las fotos 
   const navigate = useNavigate();
   const [userRole, setUserRole] = useState("user"); // 'normal' or 'admin'
+  const [userData, setUserData] = useState(null);
 
   const handleShowEdit = () => setShowEditModal(true);
   const handleCloseEdit = () => setShowEditModal(false);
   const handleShowPublish = () => setShowPublishModal(true);
   const handleClosePublish = () => setShowPublishModal(false);
+  const user_id = localStorage.getItem("user_id");
 
   const handleLogout = () => {
     navigate('/Pagina'); // Redirige al index "Pagina"
@@ -39,6 +43,29 @@ function PaginaPerfil() {
     setPhotos([...photos, newPhoto]);
     handleClosePublish(); // Cerrar el modal después de publicar
   };
+
+  useEffect(() =>{
+    const fetchUserData = async () =>{
+      try{
+        // console.log(user_id);
+        const response = await User.getUsers(user_id);
+        // const post = await Post.getPost(user_id);
+        // const postPhoto = {
+        //   url: URL.createObjectURL(post.image_link),
+        //   description: post.description_photo,
+        //   rating: 0,  // Inicializa la calificación en 0
+        //   rated: false // Indica si la foto ya fue calificada
+        // };
+        // console.log(postPhoto)
+        // setPhotos(postPhoto)
+        console.log("Valor: "+response.username);
+        setUserData(response);
+      }catch(error){
+        console.log("Error al obtener los datos:", error)
+      }
+    };
+    fetchUserData();
+  },[user_id])
 
   return (
     <div className="container-fluid">
@@ -93,14 +120,14 @@ function PaginaPerfil() {
                 />
               </div>
               <div className="col">
-                <h2 id="username">Nombre del perfil</h2>
+                <h2 id="username">{userData ? userData.username : 'Cargando...'}</h2>
                 <Button className="btn btn-dark me-3 my-2" onClick={handleShowEdit}>
                   Editar
                 </Button>
                 <Button className="btn btn-dark me-3 my-2" onClick={handleShowPublish}>
                   +
                 </Button>
-                <h4 id="name">Nombre completo</h4>
+                <h4 id="name">{userData ? userData.first_name +" "+userData.last_name : 'Cargando...'}</h4>
               </div>
             </div>
           </div>

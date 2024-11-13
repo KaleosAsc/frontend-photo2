@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './apiService';
 
 // Definir la URL de las APIs usando variables de entorno
 const API_URL = process.env.REACT_APP_API_URL_USER;
@@ -35,13 +35,24 @@ class UserService {
     }
 
     // Método para obtener usuarios
-    async getUsers() {
-        try {
-            const response = await axios.get(`${API_URL}`);
-            return response.data; // Devuelve los datos obtenidos
-        } catch (error) {
-            console.error('Error obteniendo usuarios:', error);
-            throw error; // Propaga el error
+    async getUsers(id) {
+        if(id){
+            try {
+                const response = await axios.get(`${API_URL}${id}`);
+                console.log("service "+response.data.username)
+                return response.data; // Devuelve los datos obtenidos
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                throw error; // Propaga el error
+            }
+        }else{
+            try {
+                const response = await axios.get(`${API_URL}`);
+                return response.data; // Devuelve los datos obtenidos
+            } catch (error) {
+                console.error('Error obteniendo usuarios:', error);
+                throw error; // Propaga el error
+            }
         }
     }
 

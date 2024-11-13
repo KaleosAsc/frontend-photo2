@@ -1,8 +1,21 @@
 // src/components/RegisterUserModal.js
 import React from 'react';
+import { useReducer,useEffect } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
+const intialState = {
+  firstName: '',
+  lastName: '',
+
+
+  
+}
+function reducer(state,action){
+
+}
+
 function RegisterUserModal({ show, handleClose }) {
+  const [state,dispatch] = useReducer(reducer, )
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
