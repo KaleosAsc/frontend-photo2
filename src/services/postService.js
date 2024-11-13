@@ -6,7 +6,7 @@ class PostService{
         if(id){
             try {
                 const response = await axios.get(`${API_URL}${id}`);
-                console.log("publicaciones: "+response.data)
+                console.log("publicaciones: "+response.data[0].image_link);
                 return response.data; // Devuelve los datos obtenidos
             } catch (error) {
                 console.error('Error fetching data:', error);

@@ -5,16 +5,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/global.css';
 import { Modal, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import Galeria from '../components/gallery/Gallery'; // Asegúrate de tener el import correcto para Galeria
+import Galeria from '../components/gallery/Gallery';
 import EditProfileModal from '../components/Modals/EditProfileModal';
 import PublishModal from '../components/Modals/PublishModal';
 
 function PaginaPerfil() {
+  const PHOTO_URL = process.env.REACT_APP_API_PHOTO;
   const [showEditModal, setShowEditModal] = useState(false);
   const [showPublishModal, setShowPublishModal] = useState(false);
   const [photos, setPhotos] = useState([]); // Estado para almacenar las fotos 
   const navigate = useNavigate();
-  const [userRole, setUserRole] = useState("user"); // 'normal' or 'admin'
+  const [userRole, setUserRole] = useState("user");
   const [userData, setUserData] = useState(null);
 
   const handleShowEdit = () => setShowEditModal(true);
@@ -24,53 +25,53 @@ function PaginaPerfil() {
   const user_id = localStorage.getItem("user_id");
 
   const handleLogout = () => {
-    navigate('/Pagina'); // Redirige al index "Pagina"
+    navigate('/Pagina'); 
   };
 
   const handlePublish = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
 
-    // Crear un nuevo objeto de foto
     const newPhoto = {
       url: URL.createObjectURL(formData.get('image')),
       description: formData.get('description'),
-      rating: 0,  // Inicializa la calificación en 0
-      rated: false // Indica si la foto ya fue calificada
+      rating: 0,
+      rated: false
     };
 
-    // Actualizar el estado de las fotos
     setPhotos([...photos, newPhoto]);
-    handleClosePublish(); // Cerrar el modal después de publicar
+    handleClosePublish();
   };
 
-  useEffect(() =>{
-    const fetchUserData = async () =>{
-      try{
-        // console.log(user_id);
-        const response = await User.getUsers(user_id);
-        // const post = await Post.getPost(user_id);
-        // const postPhoto = {
-        //   url: URL.createObjectURL(post.image_link),
-        //   description: post.description_photo,
-        //   rating: 0,  // Inicializa la calificación en 0
-        //   rated: false // Indica si la foto ya fue calificada
-        // };
-        // console.log(postPhoto)
-        // setPhotos(postPhoto)
-        console.log("Valor: "+response.username);
-        setUserData(response);
-      }catch(error){
-        console.log("Error al obtener los datos:", error)
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userResponse = await User.getUsers(user_id);
+        setUserData(userResponse);
+
+        // Obtener los datos de las publicaciones del usuario
+        const post = await Post.getPost(user_id);
+        
+        // Crear un arreglo temporal de fotos
+        const fetchedPhotos = post.map((p) => ({
+          url: `${PHOTO_URL}${p.image_link}`,
+          description: p.description_photo,
+          rating: 0,
+          rated: false,
+        }));
+        console.log(fetchedPhotos)
+        // Actualizar el estado `photos` con el arreglo completo de fotos
+        setPhotos(fetchedPhotos);
+      } catch (error) {
+        console.log("Error al obtener los datos:", error);
       }
     };
     fetchUserData();
-  },[user_id])
+  }, [user_id]);
 
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Barra de navegación superior */}
         <div className="row align-items-center bg-dark py-2">
           <div className="col-12 col-sm-2 text-center text-sm-start mb-2 mb-sm-0">
             <a href="/PaginaPrincipal">
@@ -90,14 +91,14 @@ function PaginaPerfil() {
               <button className="btn btn-link text-light me-2" onClick={() => navigate('/paginaPerfil')} style={{ textDecoration: 'none', fontSize: '16px' }}>
                 Perfil
               </button>
-              {userRole === 'admin' &&(
+              {userRole === 'admin' && (
                 <>
-                   <button className="btn btn-link text-light me-2" onClick={() => navigate('/PaginaPublicaciones')} style={{ textDecoration: 'none', fontSize: '16px' }}>
-                      Tabla Publicaciones
-                   </button>
-                   <button className="btn btn-link text-light me-2" onClick={() => navigate('/TablaUsuarios')} style={{ textDecoration: 'none', fontSize: '16px' }}>
+                  <button className="btn btn-link text-light me-2" onClick={() => navigate('/PaginaPublicaciones')} style={{ textDecoration: 'none', fontSize: '16px' }}>
+                    Tabla Publicaciones
+                  </button>
+                  <button className="btn btn-link text-light me-2" onClick={() => navigate('/TablaUsuarios')} style={{ textDecoration: 'none', fontSize: '16px' }}>
                     Tabla Usuarios
-                   </button>
+                  </button>
                 </>
               )}
               <button className="btn btn-link text-light me-2" onClick={handleLogout} style={{ textDecoration: 'none', fontSize: '16px' }}>
@@ -127,7 +128,7 @@ function PaginaPerfil() {
                 <Button className="btn btn-dark me-3 my-2" onClick={handleShowPublish}>
                   +
                 </Button>
-                <h4 id="name">{userData ? userData.first_name +" "+userData.last_name : 'Cargando...'}</h4>
+                <h4 id="name">{userData ? `${userData.first_name} ${userData.last_name}` : 'Cargando...'}</h4>
               </div>
             </div>
           </div>
@@ -136,9 +137,8 @@ function PaginaPerfil() {
           <Galeria photos={photos} />
         </div>
       </div>
-      {/* Modal de edición de perfil */}
-       <EditProfileModal show={showEditModal} handleClose={handleCloseEdit} />
-      {/* Modal para publicar imagen y descripción */}
+      
+      <EditProfileModal show={showEditModal} handleClose={handleCloseEdit} />
       <PublishModal
         show={showPublishModal}
         handleClose={handleClosePublish}
