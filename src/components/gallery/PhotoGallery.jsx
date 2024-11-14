@@ -1,14 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
+import Post from '../../services/postService';
 
-const PhotoGallery = ({ photos, handleRating }) => {
+const PhotoGallery = ({ handleRating }) => {
+  const [photos, setPhotos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const BASE_URL  = process.env.REACT_APP_API_PHOTO;
+
+  const fetchPhotos = async () => {
+    try {
+      const response = await Post.getPost();
+      console.log('Respuesta de la API:', response);
+      // Mapea las fotos para incluir la URL base
+      // console.log("Repuesta "+`${BASE_URL}${response.photo.image_link}`);
+      setPhotos(response.map(photo => ({
+        ...photo,
+        image_link: `${BASE_URL}${photo.image_link}` // Concatena la URL base
+       
+      })));
+    } catch (error) {
+      console.error('Error al obtener las fotos:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPhotos();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="photo-gallery">
       {photos.map((photo, index) => (
         <div key={index} className="gallery-item2">
           <div className="card">
             <img
-              src={photo.url}
+              src={photo.image_link}
               className="card-img-top gallery-image2"
               alt={`Foto ${index + 1}`}
             />

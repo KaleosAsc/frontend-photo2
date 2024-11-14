@@ -31,16 +31,6 @@ class PostService{
             throw error; // Propaga el error
         }
      };
-
-     async postPost(data){
-        try {
-            const response = await axios.post(`${API_URL}`,data);
-            return response.data; // Devuelve los datos obtenidos
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            throw error; // Propaga el error
-        }
-     };
      
      async putPost(id,data) {
         try {

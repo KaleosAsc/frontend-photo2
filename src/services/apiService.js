@@ -13,6 +13,8 @@ axiosInstance.interceptors.response.use(
        // Suponiendo que el ID del usuario está en la respuesta
        if (response.data.user_id) {
            localStorage.setItem('user_id', response.data.user_id);
+           var allCookies = document.cookie;
+           console.log(allCookies.access_token);
        }
        return response; // Asegúrate de devolver la respuesta para que el flujo continúe
    },
@@ -21,4 +23,6 @@ axiosInstance.interceptors.response.use(
        return Promise.reject(error);
    }
 );
+
+
 export default axiosInstance;

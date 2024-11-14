@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/global.css';
 import AddPhotoModal from '../components/Modals/AddPhotoModal'; // Asegúrate de tener la ruta correcta
 import PhotoGallery from '../components/gallery/PhotoGallery'; // Importa el nuevo componente
-
+/**Pagina principal */
 const PaginaPrincipal = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -30,7 +30,11 @@ const PaginaPrincipal = () => {
     setPhoto(null);
     setDescription("");
   };
-  
+  const handleLogout = () => {
+    console.log("log out");
+    localStorage.removeItem('user_id');
+    navigate('/Pagina'); 
+  };
   const handleRating = (index, rating) => {
     const updatedPhotos = [...photos];
     updatedPhotos[index].rating = rating;
@@ -67,7 +71,7 @@ const PaginaPrincipal = () => {
                     </button>
                   </>
                 )}
-                <button className="btn btn-link text-light me-2" onClick={() => navigate('/Pagina')} style={{ textDecoration: 'none', fontSize: '16px' }}>
+                <button className="btn btn-link text-light me-2" onClick={handleLogout} style={{ textDecoration: 'none', fontSize: '16px' }}>
                   Salir
                 </button>
               </div>
