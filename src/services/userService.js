@@ -59,7 +59,7 @@ class UserService {
     // Método para actualizar un usuario
     async putUsers(id, data) {
         try {
-            const response = await axios.put(`${API_URL}/${id}`, data);
+            const response = await axios.put(`${API_URL}${id}`, data);
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error actualizando usuario:', error);

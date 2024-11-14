@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/global.css';
 
-const ImageGallery = () => {
+const ImageGallery = ({photos}) => {
   const images = [
     { src: 'https://marketing4ecommerce.co/wp-content/uploads/2023/10/ias-generadoras-de-imagenes.jpg'},
     { src: 'https://www.shutterstock.com/image-illustration/david-street-style-graphic-designtextile-600nw-2265632523.jpg'},
@@ -17,9 +17,9 @@ const ImageGallery = () => {
 
   return (
     <div className="image-gallery">
-      {images.map((image, index) => (
+      {photos.map((photo, index) => (
         <div key={index} className="image-item">
-          <img src={image.src} alt={image.alt} className="image" />
+          <img src={photo.url} alt={photo.alt} className="image" />
         </div>
       ))}
     </div>

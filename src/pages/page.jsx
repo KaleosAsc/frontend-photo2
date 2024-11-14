@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Post from '../services/postService';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CarruselWrapper from '../components/Carrusel/CarruselWrapper';
@@ -8,9 +9,11 @@ import RegisterModal from '../components/Modals/RegisterModal';
 import ImageGallery from '../components/gallery/ImageGallery';
 
 const Pagina = () => {
+    const PHOTO_URL = process.env.REACT_APP_API_PHOTO;
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showRegisterModal, setShowRegisterModal] = useState(false);
     const navigate = useNavigate();
+    const [photos, setPhotos] = useState([]); // Estado para 
 
     const handleLoginModal = () => {
         setShowLoginModal(!showLoginModal);
@@ -29,6 +32,31 @@ const Pagina = () => {
         navigate('/PaginaPrincipal');
         handleRegisterModal();
     };
+    useEffect(() => {
+        const fetchUserData = async () => {
+          try {
+    
+            // Obtener los datos de las publicaciones del usuario
+            const post = await Post.getPost();
+            console.log('Respuesta de la api pagina principal', post);
+            
+            // Crear un arreglo temporal de fotos
+            const fetchedPhotos = post.map((p) => ({
+              url: `${PHOTO_URL}${p.image_link}`,
+              description: p.description_photo,
+              rating: 0,
+              rated: false,
+            }));
+            console.log(fetchedPhotos)
+            // Actualizar el estado `photos` con el arreglo completo de fotos
+            setPhotos(fetchedPhotos);
+          } catch (error) {
+            console.log("Error al obtener los datos:", error);
+          }
+        };
+        fetchUserData();
+      }, []);
+    
 
     return (
         <div className="container-fluid">
@@ -56,8 +84,8 @@ const Pagina = () => {
 
             {/* Contenido principal */}
             <div className="my-4">
-                <CarruselWrapper />
-                <ImageGallery />
+                <CarruselWrapper photos={photos} />
+                <ImageGallery photos={photos} />
             </div>
 
             {/* Modales */}

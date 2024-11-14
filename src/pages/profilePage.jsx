@@ -49,6 +49,7 @@ function PaginaPerfil() {
     const fetchUserData = async () => {
       try {
         const userResponse = await User.getUsers(user_id);
+        console.log(userResponse)
         setUserData(userResponse);
 
         // Obtener los datos de las publicaciones del usuario
@@ -131,7 +132,7 @@ function PaginaPerfil() {
                 <Button className="btn btn-dark me-3 my-2" onClick={handleShowPublish}>
                   +
                 </Button>
-                <h4 id="name">{userData ? `${userData.first_name} ${userData.last_name}` : 'Cargando...'}</h4>
+                <h4 id="name">{userData ? userData.description : 'Cargando...'}</h4>
               </div>
             </div>
           </div>

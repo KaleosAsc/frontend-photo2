@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css'; 
 import 'slick-carousel/slick/slick-theme.css';
@@ -26,7 +26,7 @@ const imageArray = [
 
 ];
 
-const Carousel = () => {
+const Carousel = ({photos}) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -36,13 +36,12 @@ const Carousel = () => {
     autoplay: true,
     autoplaySpeed: 2000,
   };
-
   return (
     <div className="carousel-container">
       <Slider {...settings}>
-        {imageArray.map((image, index) => (
+        {photos.map((photo, index) => (
           <div className="carousel-item" key={index}>
-            <img src={image.src} alt={image.alt} />
+            <img src={photo.url} alt={photo.alt} />
           </div>
         ))}
       </Slider>
