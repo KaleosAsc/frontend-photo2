@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Galeria from '../components/gallery/Gallery';
 import EditProfileModal from '../components/Modals/EditProfileModal';
 import PublishModal from '../components/Modals/PublishModal';
-
+/**Pagina perfil */
 function PaginaPerfil() {
   const PHOTO_URL = process.env.REACT_APP_API_PHOTO;
   const [showEditModal, setShowEditModal] = useState(false);
@@ -25,6 +25,8 @@ function PaginaPerfil() {
   const user_id = localStorage.getItem("user_id");
 
   const handleLogout = () => {
+    console.log("log out");
+    localStorage.removeItem('user_id');
     navigate('/Pagina'); 
   };
 
@@ -51,6 +53,7 @@ function PaginaPerfil() {
 
         // Obtener los datos de las publicaciones del usuario
         const post = await Post.getPost(user_id);
+        console.log('Respuesta de la api', post);
         
         // Crear un arreglo temporal de fotos
         const fetchedPhotos = post.map((p) => ({
