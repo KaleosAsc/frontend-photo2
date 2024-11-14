@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './apiService';
 const API_URL =  process.env.REACT_APP_API_URL_INTERACTION;
 
 

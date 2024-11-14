@@ -25,7 +25,7 @@ function PaginaPerfil() {
   const user_id = localStorage.getItem("user_id");
 
   const handleLogout = () => {
-    navigate('/Pagina'); 
+    navigate('/Pagina');  
   };
 
   const handlePublish = (event) => {
