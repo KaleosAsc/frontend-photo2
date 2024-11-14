@@ -1,0 +1,352 @@
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+/* Parte del titulo DAPA*/
+.title-shift {
+  text-align: center; /* Centra el texto dentro del contenedor */
+  width: 100%; /* Asegura que el título ocupe todo el ancho disponible */
+  margin: 0 auto; /* Centrado horizontal */
+  max-width: 800px; /* Limita el ancho máximo del título */
+  padding: 0 5vw; /* Añade un padding para evitar que toque los bordes */
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+body {
+  background-color: #eeeaea; /* Color de fondo oscuro */
+  color: rgb(8, 8, 8); /* Color del texto */
+  margin: 0; /* Eliminar márgenes por defecto */
+  font-family: Arial, sans-serif; /* Fuente predeterminada */
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  background-color: #333;
+  color: white;
+}
+
+.search-container .search-button {
+  position: absolute;
+  right: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.search-container input::placeholder {
+  color: #bbb; /* Color del placeholder */
+}
+
+
+/* parte de los botones */
+.btn-link {
+  position: relative;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.btn-link:hover, .btn-link:focus {
+  color: #007bff; /* Cambia el color de texto a azul al pasar el mouse o al enfocarse */
+}
+
+.btn-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px; /* Ubicación de la línea */
+  width: 0;
+  height: 2px; /* Grosor de la línea */
+  background-color: #007bff; /* Color de la línea */
+  transition: width 0.3s ease;
+}
+
+.btn-link:hover::after, .btn-link:focus::after {
+  width: 100%; /* Anima la línea para que se expanda completamente al pasar el mouse o enfocar */
+}
+
+
+/* Contenedor de photoGallery */
+.photo-gallery {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center; /* Centra la galería vertical y horizontalmente */
+  gap: 20px;
+  margin: 0 auto; /* Centra el contenedor en la página */
+  padding: 20px 10px 20px; /* Espacio en los laterales para pantallas pequeñas */
+  max-width: 1100px; /* Limita el ancho máximo en pantallas grandes */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  box-sizing: border-box;
+}
+
+.gallery-item2 {
+  width: 100%;
+  max-width: 800px; /* Ajuste para pantallas grandes */
+  box-sizing: border-box;
+  margin: 0px auto; /* Centra cada elemento individualmente */
+  margin-right: 2%;
+}
+
+.card {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.description-container {
+  max-height: 80px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.description {
+  margin: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  font-size: 14px;
+  color: #333;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+}
+
+/* Media queries para pantallas pequeñas */
+@media (max-width: 768px) {
+  .photo-gallery {
+    padding: 0 10px;
+  }
+
+  .gallery-item2 {
+    max-width: 100%; /* Ocupa todo el ancho disponible en pantallas pequeñas */
+  }
+}
+
+
+
+
+
+/* componente Gallery*/
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  gap: 10px; /* Espacio entre elementos */
+  margin-top: 20px; /* Espacio superior para la galería */
+}
+
+.gallery-item {
+  background-color: #eeeaea; /* Fondo blanco para cada contenedor de imagen */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+  text-align: center; /* Centrar el contenido de cada elemento */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 8px;   
+  overflow: hidden; /* Evitar que el contenido sobrepase el contenedor */
+}
+
+.gallery-image {
+  width: 100%; /* Asegura que la imagen se adapte al ancho del contenedor */
+  height: 80%; /* Ajustar la altura para dejar espacio para la descripción */
+  object-fit: cover; /* Cubre todo el contenedor manteniendo la relación de aspecto */
+  object-position: center; /* Centra la imagen dentro del contenedor */
+  border-radius: 4px; /* Bordes redondeados para las imágenes */
+}
+
+.description-container {
+  max-height: 100px; /* Limitar la altura para dar más espacio a la descripción */
+  overflow-y: auto; /* Permitir el desplazamiento vertical si el contenido excede la altura */
+  padding: 10px; /* Espaciado lateral */
+}
+
+.description {
+  margin: 0; /* Elimina el margen para un ajuste más limpio */
+  overflow-wrap: break-word; /* Permite que las palabras largas se rompan */
+  word-wrap: break-word; /* Compatibilidad con navegadores más antiguos */
+  font-size: 14px; /* Tamaño de fuente ajustado para mejor legibilidad */
+  color: #333; /* Color de texto para mejor contraste */
+}
+
+
+
+/* Estilo para la imagen destacada */
+.gallery-item.featured {
+  grid-column: span 3; /* Ocupa 3 columnas */
+  grid-row: span 3; /* Ocupa 3 filas */
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* modal registro y iniciar sesion */	
+@media (max-width: 576px) {
+  .modal-dialog {
+      max-width: 90%; /* Ajusta el ancho del modal para pantallas pequeñas */
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+      max-width: 60%; /* Ajusta el ancho del modal para pantallas medianas */
+  }
+}
+
+/* Estilos de carruseles */
+.carousel-container {
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.carousel-item {
+  text-align: center;
+  padding: 0 10px;
+  outline: none; /* Elimina líneas de selección */ 
+  border: none; /* Elimina cualquier borde */
+  box-shadow: none;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 200px; /* Ajusta la altura según tus necesidades */
+  object-fit: cover; /* Esto asegurará que la imagen llene el contenedor manteniendo su proporción */
+  border-radius: 20px; /* Borde redondeado */
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.carousel-item p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+}
+
+/* Media queries para asegurarse de que el carrusel sea responsivo */
+@media (max-width: 768px) {
+  .carousel-container {
+    width: 95%;
+  }
+  .carousel-item img {
+    height: 150px; /* Ajusta la altura para pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    width: 100%;
+  }
+  .carousel-item img {
+    height: 120px; /* Ajusta la altura para pantallas muy pequeñas */
+  }
+}
+
+/* Estilos del componente ImageGallery */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajusta el tamaño mínimo y máximo de las columnas */
+  gap: 15px; /* Espacio entre las imágenes */
+  padding: 20px; /* Espacio alrededor de la galería */
+  justify-items: center; /* Centra las imágenes dentro de su contenedor */
+}
+
+.image-item {
+  width: 100%;
+  overflow: hidden; /* Evita que las imágenes se salgan del contenedor */
+}
+
+.image {
+  width: 100%;
+  height: 280px;
+  object-fit: cover; /* Asegura que las imágenes mantengan su proporción */
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Media queries para asegurar la responsividad */
+@media (max-width: 768px) {
+  .image-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Ajusta el tamaño mínimo en pantallas medianas */
+  }
+}
+
+@media (max-width: 480px) {
+  .image-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta el tamaño mínimo en pantallas pequeñas */
+  }
+
+  .image {
+    height: 200px; /* Ajusta la altura de las imágenes en pantallas pequeñas */
+  }
+}
+
+
