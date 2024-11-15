@@ -70,10 +70,11 @@ class UserService {
     // Método para eliminar un usuario
     async deleteUsers(id) {
         try {
-            const response = await axios.delete(`${API_URL}/${id}`);
+            const response = await axios.delete(`${API_URL}${id}`);
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error eliminando usuario:', error);
+            console.log('usuario no eliminado: ',id);
             throw error; // Propaga el error
         }
     }

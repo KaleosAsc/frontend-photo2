@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Post from '../services/postService';
 import User from '../services/userService';
+import starService from '../services/starService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/global.css';
 import { Modal, Button } from 'react-bootstrap';
@@ -8,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Galeria from '../components/gallery/Gallery';
 import EditProfileModal from '../components/Modals/EditProfileModal';
 import PublishModal from '../components/Modals/PublishModal';
+
 /**Pagina perfil */
 function PaginaPerfil() {
   const PHOTO_URL = process.env.REACT_APP_API_PHOTO;
@@ -45,33 +47,58 @@ function PaginaPerfil() {
     handleClosePublish();
   };
 
+  // Función para obtener la calificación del servicio de estrellas
+  const fetchRating = async (postId) => {
+    try {
+        const ratingData = await starService.estimateRating(postId); // Usamos postId en lugar de 'photo.postId'
+        console.log('Respuesta del servicio de calificación:', ratingData);  // Log para ver la respuesta
+    } catch (error) {
+        console.error('Error al obtener la calificación:', error);
+    }
+  };
+
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
-        const userResponse = await User.getUsers(user_id);
-        console.log(userResponse)
-        setUserData(userResponse);
-
-        // Obtener los datos de las publicaciones del usuario
-        const post = await Post.getPost(user_id);
-        console.log('Respuesta de la api', post);
-        
-        // Crear un arreglo temporal de fotos
-        const fetchedPhotos = post.map((p) => ({
-          url: `${PHOTO_URL}${p.image_link}`,
-          description: p.description_photo,
-          rating: 0,
-          rated: false,
-        }));
-        console.log(fetchedPhotos)
-        // Actualizar el estado `photos` con el arreglo completo de fotos
-        setPhotos(fetchedPhotos);
-      } catch (error) {
-        console.log("Error al obtener los datos:", error);
-      }
+        try {
+            const userResponse = await User.getUsers(user_id);
+            setUserData(userResponse);
+  
+            // Obtener las publicaciones del usuario
+            const post = await Post.getPost(user_id);
+  
+            // Crear un arreglo temporal de fotos
+            const fetchedPhotos = post.map((p) => ({
+                url: `${PHOTO_URL}${p.image_link}`,
+                description: p.description_photo,
+                rating: 0,  // Inicializamos la calificación en 0
+                rated: false,
+                postId: p.post_id,
+            }));
+  
+            // Obtener la calificación de cada publicación
+            const updatedPhotos = await Promise.all(fetchedPhotos.map(async (photo) => {
+                try {
+                    // Usamos el servicio starService para obtener la calificación estimada
+                    const ratingData = await starService.estimateRating(photo.postId);
+                    // Suponiendo que la respuesta contiene un campo 'estimated_rating'
+                    photo.rating = ratingData.estimated_rating;
+                    photo.rated = true;  // Marcamos como calificado
+                    console.log('Hola: ', ratingData);  // Ver en consola los datos recibidos
+                } catch (error) {
+                    console.error('Error al obtener la calificación para el post', photo.postId);
+                }
+                return photo;
+            }));
+  
+            // Actualizamos el estado de las fotos con las calificaciones
+            setPhotos(updatedPhotos);
+        } catch (error) {
+            console.log("Error al obtener los datos:", error);
+        }
     };
+
     fetchUserData();
-  }, [user_id]);
+}, [user_id]);
 
   return (
     <div className="container-fluid">
