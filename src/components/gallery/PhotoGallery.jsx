@@ -5,18 +5,16 @@ import Post from '../../services/postService';
 const PhotoGallery = ({ handleRating }) => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const BASE_URL  = process.env.REACT_APP_API_PHOTO;
+  const BASE_URL = process.env.REACT_APP_API_PHOTO;
 
   const fetchPhotos = async () => {
     try {
       const response = await Post.getPost();
       console.log('Respuesta de la API:', response);
-      // Mapea las fotos para incluir la URL base
-      // console.log("Repuesta "+`${BASE_URL}${response.photo.image_link}`);
       setPhotos(response.map(photo => ({
         ...photo,
-        image_link: `${BASE_URL}${photo.image_link}` // Concatena la URL base
-       
+        image_link: `${BASE_URL}${photo.image_link}`, // Concatenar la URL base
+        rated: false // Iniciar cada foto como no calificada
       })));
     } catch (error) {
       console.error('Error al obtener las fotos:', error);
@@ -29,9 +27,22 @@ const PhotoGallery = ({ handleRating }) => {
     fetchPhotos();
   }, []);
 
+  const handleStarClick = (index, rating) => {
+    // Solo actualizar el estado si la foto no ha sido calificada
+    if (!photos[index].rated) {
+      handleRating(index, rating);
+      // Actualizar el estado de las fotos para reflejar la calificación
+      const updatedPhotos = [...photos];
+      updatedPhotos[index].rating = rating;
+      updatedPhotos[index].rated = true;
+      setPhotos(updatedPhotos);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className="photo-gallery">
       {photos.map((photo, index) => (
@@ -53,8 +64,8 @@ const PhotoGallery = ({ handleRating }) => {
                       key={i}
                       color={i < photo.rating ? 'gold' : 'gray'}
                       size={20}
-                      onClick={() => !photo.rated && handleRating(index, i + 1)}
-                      style={{ cursor: photo.rated ? 'not-allowed' : 'pointer' }}
+                      onClick={() => handleStarClick(index, i + 1)} // Usamos handleStarClick
+                      style={{ cursor: photo.rated ? 'not-allowed' : 'pointer' }} // Bloqueamos el clic si ya está calificada
                     />
                   ))}
                 </div>

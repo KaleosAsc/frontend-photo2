@@ -44,7 +44,7 @@ class PostService{
      
      async deletePost(id) {
         try {
-            const response = await axios.delete(`${API_URL}/${id}`);
+            const response = await axios.delete(`${API_URL}${id}`);
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error fetching data:', error);
