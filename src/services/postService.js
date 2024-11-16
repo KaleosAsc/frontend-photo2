@@ -24,6 +24,7 @@ class PostService{
     }
     async postPost(data){
         try {
+            console.log(data);
             const response = await axios.post(`${API_URL}`,data);
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
