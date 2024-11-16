@@ -1,28 +1,43 @@
-import  axios from 'axios';
+import axios from 'axios';
+
 const API_URL = process.env.REACT_APP_API_BASE;
+
+// Crear instancia de Axios
 const axiosInstance = axios.create({
     baseURL: API_URL,
-    withCredentials: true,  // Si estás utilizando cookies o credenciales
-    // headers: {
-    //    'Authorization': `Bearer ${localStorage.getItem('acces_token')}`  // Si estás usando un token JWT
-    // }
- });
+    withCredentials: true,
+});
 
-axiosInstance.interceptors.response.use(
-   response => {
-       // Suponiendo que el ID del usuario está en la respuesta
-       if (response.data.user_id) {
-           localStorage.setItem('user_id', response.data.user_id);
-           var allCookies = document.cookie;
-           console.log(allCookies.access_token);
-       }
-       return response; // Asegúrate de devolver la respuesta para que el flujo continúe
-   },
-   error => {
-       console.error('Error en la solicitud:', error);
-       return Promise.reject(error);
-   }
+// Interceptor de request para incluir el Bearer token
+axiosInstance.interceptors.request.use(
+    config => {
+        const token = localStorage.getItem('access'); // Recuperar el token de acceso
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`; // Incluir el token en el encabezado Authorization
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
 );
 
+// Interceptor de response para manejar user_id y access token
+axiosInstance.interceptors.response.use(
+    response => {
+        // Guardar el user_id si está presente en la respuesta
+        if (response.data.user_id) {
+            localStorage.setItem('user_id', response.data.user_id);
+        }
+        // Guardar el token de acceso si está presente en la respuesta
+        if (response.data.access) {
+            localStorage.setItem('access', response.data.access);
+        }
+        return response;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
 
 export default axiosInstance;
