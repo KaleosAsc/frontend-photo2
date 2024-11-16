@@ -16,6 +16,7 @@ class UserService {
                 },
                 withCredentials: true,
             });
+            localStorage.setItem('user_id',response.data.user_id);
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error registrando usuario:', error);
@@ -27,6 +28,7 @@ class UserService {
     async loginUsers(data) {
         try {
             const response = await axios.post(`${API_URL_TOKEN_ACCESS}`, data);
+            localStorage.setItem('user_id',response.data.user_id);
             return response.data; // Devuelve los datos obtenidos
         } catch (error) {
             console.error('Error iniciando sesión:', error);

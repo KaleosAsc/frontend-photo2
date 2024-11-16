@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_BASE;
 
-// Crear instancia de Axios
+// Crear instancia de Axios con Content-Type predeterminado
 const axiosInstance = axios.create({
     baseURL: API_URL,
     withCredentials: true,
@@ -25,11 +25,6 @@ axiosInstance.interceptors.request.use(
 // Interceptor de response para manejar user_id y access token
 axiosInstance.interceptors.response.use(
     response => {
-        // Guardar el user_id si está presente en la respuesta
-        if (response.data.user_id) {
-            localStorage.setItem('user_id', response.data.user_id);
-        }
-        // Guardar el token de acceso si está presente en la respuesta
         if (response.data.access) {
             localStorage.setItem('access', response.data.access);
         }

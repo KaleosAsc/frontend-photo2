@@ -66,6 +66,11 @@ const AddPhotoModal = ({ show, handleClose }) => {
     formData.append('user_id', localStorage.getItem("user_id"));
 
     try {
+
+        // Imprimir los datos del FormData
+        formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+        });
       const response = await Post.postPost(formData);
       console.log('Publicación creada:', response);
 
